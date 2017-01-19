@@ -17,3 +17,11 @@ body {
 .navbar-default .navbar-brand {
     color: white;
 }
+
+.table {
+    margin-top: 5%;
+}
+
+.form {
+    margin-top: 5%;
+}
