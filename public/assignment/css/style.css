@@ -25,3 +25,11 @@ body {
 .form {
     margin-top: 5%;
 }
+
+.pull-left {
+    margin-left: 3%;
+}
+
+.pull-right {
+    margin-right: 3%;
+}

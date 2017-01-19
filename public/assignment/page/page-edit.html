@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>New Page</title>
+    <title>Edit Page</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="../css/style.css" rel="stylesheet"/>
 </head>
@@ -13,17 +13,17 @@
     <div class="container-fluid">
     <div class="navbar-header">
     <p class="navbar-text pull-left">
-        <a href="../page-list.html" class="navbar-link">
+        <a href="page-list.html" class="navbar-link">
                 <span class="glyphicon glyphicon-chevron-left">
                 </span>
         </a>
         </p>
 
             <a class="navbar-brand" href="#">
-                New Page
+                Edit Page
             </a>
             <p class="navbar-text pull-right">
-                <a href="../page-list.html" class="navbar-link">
+                <a href="page-list.html" class="navbar-link">
           <span class="glyphicon glyphicon-ok">
           </span>
                 </a>
@@ -35,7 +35,7 @@
 
     <div class="container">
 
-        <form>
+        <form class="form">
             <div class="form-group">
                 <label for="username">Name</label>
                 <input type="text" class="form-control" id="website-name" placeholder="Name">
@@ -45,14 +45,15 @@
                 <input type="text" class="form-control" id="page-title" placeholder="Page Title">
             </div>
         </form>
-
+        <a class="btn btn-danger btn-block"
+           href="page-list.html">Delete</a>
     </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container">
         <div class="navbar-header">
         <p class="navbar-text pull-right">
-            <a href="../profile.html" class="navbar-link">
+            <a href="../user/profile.html" class="navbar-link">
                 <span class="glyphicon glyphicon-user"></span>
             </a>
         </p>
