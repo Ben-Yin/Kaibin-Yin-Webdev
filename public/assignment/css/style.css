@@ -3,7 +3,8 @@ input.form-control {
 }
 
 body {
-    padding-top: 36px;
+    padding-top: 60px;
+    padding-bottom: 50px;
 }
 
 .navbar-default {
@@ -18,18 +19,18 @@ body {
     color: white;
 }
 
-.table {
-    margin-top: 5%;
+.row-above-navbar {
+    margin-bottom: 5%;
 }
 
-.form {
-    margin-top: 5%;
-}
 
-.pull-left {
-    margin-left: 3%;
-}
 
-.pull-right {
-    margin-right: 3%;
+@media screen and (max-width: 760px) {
+    .pull-left {
+        margin-left: 3%;
+    }
+
+    .pull-right {
+        margin-right: 3%;
+    }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Edit Website</title>
+    <title>Websites</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="../css/style.css" rel="stylesheet"/>
 </head>
@@ -13,40 +13,41 @@
     <div class="container-fluid">
     <div class="navbar-header">
     <p class="navbar-text pull-left">
-        <a href="website-list.html" class="navbar-link">
+        <a href="widget-list.html" class="navbar-link">
                 <span class="glyphicon glyphicon-chevron-left">
                 </span>
         </a>
         </p>
-
-            <a class="navbar-brand" href="#">
-                Edit Website
+        <a class="navbar-brand" href="#">
+            Websites
+        </a>
+        <p class="navbar-text pull-right">
+            <a href="website-new.html" class="navbar-link">
+                <span class="glyphicon glyphicon-plus">
+                </span>
             </a>
-            <p class="navbar-text pull-right">
-                <a href="website-list.html" class="navbar-link">
-          <span class="glyphicon glyphicon-ok">
-          </span>
-                </a>
-            </p>
-        </div>
-    </div>
+        </p>
 </nav>
 
 
     <div class="container">
+        <table class="table">
+            <thead>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="widget-heading.html">Header</a></td>
+                </tr>
+                <tr>
+                    <td>
+                    <a href="widget-image.html">Image</a></td>
+                </tr>
+                <tr>
+                    <td><a href="widget-youtube.html">YouTube</a></td>
 
-        <form class="form">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="website-name" placeholder="Name">
-            </div>
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea class="form-control" rows="4" placeholder="Description"></textarea>
-            </div>
-        </form>
-        <a class="btn btn-danger btn-block"
-           href="website-list.html">Delete</a>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
