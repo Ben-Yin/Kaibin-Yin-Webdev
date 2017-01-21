@@ -10,15 +10,12 @@
 <body>
     <div class="container">
         <h1>Register</h1>
-        <input type="text"
-               class="form-control"
-               placeholder="username"/>
-        <input type="password"
-               class="form-control"
-               placeholder="password"/>
-        <input type="password"
-               class="form-control"
-               placeholder="very password"/>
+        <input ng-model="model.user.username" class="form-control"
+        type="text" placeholder="Username"/>
+        <input ng-model="model.user.password" class="form-control"
+        type="password" placeholder="Password"/>
+        <input ng-model="model.user.password-again" class="form-control"
+        type="password" placeholder="Password Again"/>
         <a class="btn btn-primary btn-block"
            href="profile.html">Register</a>
         <a class="btn btn-danger  btn-block"

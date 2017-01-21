@@ -10,7 +10,7 @@
 <body>
 
 <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
+    <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">
                 Profile
@@ -31,19 +31,19 @@
         <form class="form">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" placeholder="Username">
+                <input ng-model="model.user.username" type="text" class="form-control" id="username">
             </div>
             <div class="form-group">
                 <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" placeholder="alice@wonderland.com">
+                <input ng-model="model.user.email" type="email" class="form-control" id="email">
             </div>
             <div class="form-group">
                 <label for="first-name">First Name</label>
-                <input type="text" class="form-control" id="first-name" placeholder="Alice">
+                <input ng-model="model.user.firstName" type="text" class="form-control" id="first-name">
             </div>
             <div class="form-group">
                 <label for="last-name">Last Name</label>
-                <input type="text" class="form-control" id="last-name" placeholder="Wonderland">
+                <input ng-model="model.user.lastName" type="text" class="form-control" id="last-name">
             </div>
         </form>
 
