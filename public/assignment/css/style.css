@@ -24,7 +24,14 @@ body {
 }
 
 
-@media screen and (max-width: 760px) {
+@media screen and (min-width: 768px) {
+    .pull-right {
+        position: absolute;
+        right: 30px;
+    }
+}
+
+@media screen and (max-width: 767px) {
     .pull-left {
         margin-left: 3%;
     }
@@ -33,3 +40,4 @@ body {
         margin-right: 3%;
     }
 }
+
