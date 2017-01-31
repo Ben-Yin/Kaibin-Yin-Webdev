@@ -1,9 +1,9 @@
-(function() {
+(function () {
     angular
         .module("WebAppMaker")
         .controller("LoginController", LoginController)
         .controller("RegisterController", RegisterController)
-        .controller("ProfileController", ProfileController)
+        .controller("ProfileController", ProfileController);
     function LoginController($location, UserService) {
         var vm = this;
         vm.login = login;
@@ -16,15 +16,19 @@
             }
         }
     }
+
     function RegisterController() {
         var vm = this;
     }
+
     function ProfileController($routeParams, UserService) {
         var vm = this;
-        vm.userId = $routeParams["userId"];
+        vm.userId = $routeParams["uid"];
+        console.log(vm.userId);
         function init() {
-            vm.user = UserService.findWebsiteById(vm.userId);
+            vm.user = UserService.findUserById(vm.userId);
         }
+
         init();
     }
 })();

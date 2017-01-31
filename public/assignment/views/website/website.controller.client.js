@@ -1,4 +1,4 @@
-(function() {
+(function () {
     angular
         .module("WebAppMaker")
         .controller("WebsiteListController", WebsiteListController)
@@ -10,11 +10,14 @@
         function init() {
             vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
         }
+
         init();
     }
+
     function NewWebsiteController() {
         var vm = this;
     }
+
     function EditWebsiteController($routeProvider, WebsiteService) {
         var vm = this;
         vm.websiteId = $routeProvider.websiteId;
@@ -24,12 +27,15 @@
         function init() {
             vm.website = WebsiteService.findWebsiteById(vm.websiteId);
         }
+
         function updateWebsite(website) {
             WebsiteService.updateWebsite(vm.websiteId, website);
         }
+
         function deleteWebsite() {
             WebsiteService.deleteWebsite(vm.websiteId);
         }
+
         init();
     }
 })();

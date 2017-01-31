@@ -1,4 +1,4 @@
-(function() {
+(function () {
     angular
         .module("WebAppMaker")
         .controller("PageListController", PageListController)
@@ -10,11 +10,14 @@
         function init() {
             vm.pages = PageService.findPageByWebsiteId(vm.websiteId);
         }
+
         init();
     }
+
     function NewPageController() {
         var vm = this;
     }
+
     function EditPageController($routeProvider, PageService) {
         var vm = this;
         vm.pageId = $routeProvider.pageId;
@@ -24,12 +27,15 @@
         function init() {
             vm.page = PageService.findPageById(vm.pageId);
         }
+
         function updatePage(page) {
             PageService.updatePage(vm.pageId, page);
         }
+
         function deletePage() {
             PageService.deletePage(vm.pageId);
         }
+
         init();
     }
 })();
