@@ -6,7 +6,7 @@
         .controller("EditWidgetController", EditWidgetController)
     function WidgetListController($routeParams, WidgetService) {
         var vm = this;
-        vm.pageId = $routeParams["pageId"];
+        vm.pageId = $routeParams["pid"];
         function init() {
             vm.websites = WidgetService.findWidgetsByPageId(vm.pageId);
         }
@@ -18,15 +18,17 @@
         var vm = this;
     }
 
-    function EditWidgetController($routeProvider, WidgetService) {
+    function EditWidgetController($routeParams, WidgetService) {
         var vm = this;
-        vm.widgetId = $routeProvider.widgetId;
+        vm.widgetId = $routeParams[wgid];
         vm.updateWidget = updateWidget;
         vm.deleteWidget = deleteWidget;
 
         function init() {
             vm.widget = WidgetService.findWidgetById(vm.widgetId);
         }
+
+        init();
 
         function updateWidget(widget) {
             WidgetService.updateWidget(vm.widgetId, widget);
@@ -36,6 +38,5 @@
             WidgetService.deleteWidget(vm.widgetId);
         }
 
-        init();
     }
 })();

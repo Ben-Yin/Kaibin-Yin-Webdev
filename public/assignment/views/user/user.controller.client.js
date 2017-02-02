@@ -4,31 +4,59 @@
         .controller("LoginController", LoginController)
         .controller("RegisterController", RegisterController)
         .controller("ProfileController", ProfileController);
-    function LoginController($location, UserService) {
+    function LoginController($location, $window, UserService) {
         var vm = this;
         vm.login = login;
+
+        function init() {
+        }
+
+        init();
+
         function login(user) {
             user = UserService.findUserByCredentials(user.username, user.password);
             if (user) {
                 $location.url("/user/" + user._id);
             } else {
-                vm.alert = "Unable to login";
+                $window.alert("Unable to login");
             }
         }
     }
 
-    function RegisterController() {
+    function RegisterController($location, $window, UserService) {
         var vm = this;
+        vm.register = register;
+
+        function init() {
+        }
+
+        init();
+
+        function register(user) {
+            if (user.password != user.passwordAgain) {
+                $window.alert("two input password is not the same, Please check!");
+            } else {
+                var user = UserService.createUser(user);
+                if (user) {
+                    $location.url("/user/"+user._id);
+                }
+            }
+        }
     }
 
     function ProfileController($routeParams, UserService) {
         var vm = this;
+        vm.updateProfile = updateProfile;
         vm.userId = $routeParams["uid"];
-        console.log(vm.userId);
+
         function init() {
             vm.user = UserService.findUserById(vm.userId);
         }
 
         init();
+
+        function updateProfile(user) {
+            UserService.updateUser(vm.userId, user);
+        }
     }
 })();

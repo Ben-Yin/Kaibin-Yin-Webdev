@@ -1,11 +1,11 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand">
                 Profile
             </a>
             <p class="navbar-text pull-right">
-                <a href="#" class="navbar-link">
+                <a class="navbar-link" ng-click="model.updateProfile(model.user)">
                     <span class="glyphicon glyphicon-ok">
                     </span>
                 </a>
@@ -49,16 +49,16 @@
     </form>
 
     <a class="btn btn-primary btn-block"
-       href="../website/website-list.html">Websites</a>
+       ng-href="#/user/{{model.user._id}}/website" >Websites</a>
     <a class="btn btn-danger  btn-block"
-       href="login.html">Logout</a>
+       href="#/login">Logout</a>
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container">
         <div class="navbar-header">
             <p class="navbar-text pull-right">
-                <a href="profile.html" class="navbar-link">
+                <a ng-href="#/user/{{model.user._id}}" class="navbar-link">
                     <span class="glyphicon glyphicon-user"></span>
                 </a>
             </p>

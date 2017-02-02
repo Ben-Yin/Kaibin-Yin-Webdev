@@ -45,11 +45,11 @@
         function findWidgetById(widgetId) {
             var left = 0;
             var right = widgets.length;
-            while (left < right) {
-                var mid = (left + right) / 2;
+            while (left <= right) {
+                var mid = parseInt((left + right) / 2);
                 if (widgets[mid]._id == widgetId) {
                     return widgets[mid];
-                } else if (widgets[mid] > widgetId) {
+                } else if (widgets[mid]._id > widgetId) {
                     right = mid - 1;
                 } else {
                     left = mid + 1;

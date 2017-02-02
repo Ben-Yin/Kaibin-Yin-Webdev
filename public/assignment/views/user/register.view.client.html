@@ -8,12 +8,12 @@
            class="form-control"
            type="password"
            placeholder="Password"/>
-    <input ng-model="model.user.password-again"
+    <input ng-model="model.user.passwordAgain"
            class="form-control"
            type="password"
            placeholder="Password Again"/>
     <a class="btn btn-primary btn-block"
-       href="profile.html">Register</a>
+       ng-click="model.register(model.user)">Register</a>
     <a class="btn btn-danger  btn-block"
-       href="login.html">Cancel</a>
+       href="#/login">Cancel</a>
 </div>

@@ -12,11 +12,11 @@
             {"_id": "789", "name": "Chess", "developerId": "234", "description": "Lorem"}
         ];
         var api = {
-            "createWebsite": "createWebsite",
-            "findWebsitesByUser": "findWebsitesByUser",
-            "findWebsiteById": "findWebsiteById",
-            "updateWebsite": "updateWebsite",
-            "deleteWebsite": "deleteWebsite"
+            "createWebsite": createWebsite,
+            "findWebsitesByUser": findWebsitesByUser,
+            "findWebsiteById": findWebsiteById,
+            "updateWebsite": updateWebsite,
+            "deleteWebsite": deleteWebsite
         };
         return api;
         function createWebsite(userId, website) {
@@ -38,11 +38,11 @@
         function findWebsiteById(websiteId) {
             var left = 0;
             var right = websites.length;
-            while (left < right) {
-                var mid = (left + right) / 2;
+            while (left <= right) {
+                var mid = parseInt((left + right) / 2);
                 if (websites[mid]._id == websiteId) {
                     return websites[mid];
-                } else if (websites[mid] > websiteId) {
+                } else if (websites[mid]._id > websiteId) {
                     right = mid - 1;
                 } else {
                     left = mid + 1;
@@ -54,7 +54,8 @@
         function updateWebsite(websiteId, website) {
             for (var i = 0; i < websites.length; i++) {
                 if (websites[i]._id == websiteId) {
-                    websites[i] = website;
+                    websites[i].name = website.name;
+                    websites[i].description = website.description;
                 }
             }
         }

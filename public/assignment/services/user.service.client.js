@@ -19,16 +19,20 @@
         };
         return api;
         function createUser(user) {
-            user._id = users[users.length - 1]._id + 1;
-            users.push(user);
+            var newUser = {_id:"", username:"", password:""};
+            newUser._id = users[users.length - 1]._id + 1;
+            newUser.username = user.username;
+            newUser.password = user.password;
+            users.push(newUser);
+            console.log(users);
+            return newUser._id;
         }
 
         function findUserById(id) {
             var left = 0;
             var right = users.length;
-            while (left < right) {
+            while (left <= right) {
                 var mid = parseInt((left + right) / 2);
-                console.log(mid);
                 if (users[mid]._id == id) {
                     return users[mid];
                 } else if (users[mid]._id > id) {

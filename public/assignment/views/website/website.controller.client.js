@@ -3,10 +3,12 @@
         .module("WebAppMaker")
         .controller("WebsiteListController", WebsiteListController)
         .controller("NewWebsiteController", NewWebsiteController)
-        .controller("EditWebsiteController", EditWebsiteController)
+        .controller("EditWebsiteController", EditWebsiteController);
     function WebsiteListController($routeParams, WebsiteService) {
         var vm = this;
-        vm.userId = $routeParams["userId"];
+        vm.userId = $routeParams["uid"];
+        //vm.userId = $routeProvider.userId;
+
         function init() {
             vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
         }
@@ -14,28 +16,44 @@
         init();
     }
 
-    function NewWebsiteController() {
+    function NewWebsiteController($routeParams, $location, WebsiteService) {
         var vm = this;
+        vm.createWebsite = createWebsite;
+        vm.userId = $routeParams["uid"];
+
+        function init() {
+        }
+
+        init();
+
+        function createWebsite(website) {
+            WebsiteService.createWebsite(vm.userId, website);
+            $location.url("/user/"+vm.userId+"/website");
+        }
     }
 
-    function EditWebsiteController($routeProvider, WebsiteService) {
+    function EditWebsiteController($routeParams, $location, WebsiteService) {
         var vm = this;
-        vm.websiteId = $routeProvider.websiteId;
         vm.updateWebsite = updateWebsite;
         vm.deleteWebsite = deleteWebsite;
+        vm.userId = $routeParams["uid"];
+        vm.websiteId = $routeParams["wid"];
 
         function init() {
             vm.website = WebsiteService.findWebsiteById(vm.websiteId);
         }
 
+        init();
+
         function updateWebsite(website) {
             WebsiteService.updateWebsite(vm.websiteId, website);
+            $location.url("/user/"+vm.userId+"/website");
         }
 
         function deleteWebsite() {
             WebsiteService.deleteWebsite(vm.websiteId);
+            $location.url("/user/"+vm.userId+"/website");
         }
 
-        init();
     }
 })();
