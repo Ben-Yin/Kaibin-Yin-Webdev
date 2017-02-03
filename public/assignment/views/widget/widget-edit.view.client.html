@@ -1,0 +1,47 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <p class="navbar-text pull-left">
+                <a href="widget-list.html" class="navbar-link">
+                    <span class="glyphicon glyphicon-chevron-left">
+                    </span>
+                </a>
+            </p>
+            <a class="navbar-brand">
+                Edit YouTube Video Widget
+            </a>
+            <p class="navbar-text pull-right">
+                <a href="widget-list.html" class="navbar-link">
+                  <span class="glyphicon glyphicon-ok">
+                  </span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
+
+
+
+<div ng-switch="widget.widgetType">
+    <div ng-switch-when="HEADING">
+        <ng-include src="'widget-heading.view.client.html'">
+    </div>
+    <div ng-switch-when="IMAGE">
+        <ng-include src="'widget-image.view.client.html'">
+    </div>
+    <div ng-switch-when="YOUTUBE">
+        <ng-include src="'widget-youtube.view.client.html'">
+    </div>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+        <div class="navbar-header">
+        <p class="navbar-text pull-right">
+            <a href="../user/profile.html" class="navbar-link">
+                <span class="glyphicon glyphicon-user"></span>
+            </a>
+        </p>
+        </div>
+    </div>
+</nav>

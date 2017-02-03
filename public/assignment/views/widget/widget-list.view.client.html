@@ -1,0 +1,25 @@
+<div class="container-fluid">
+    <div ng-repeat="widget in widgets">k
+        <div class="toolbar-right">
+            <div class="btn-group btn-group-xs" role="group" aria-label="...">
+                <button type="button" class="btn btn-default">
+                    <a ng-href="#/user/{{model.userId}}/website/{{model.websiteId}}/page">
+                        <span class="glyphicon glyphicon-cog"></span>
+                    </a>
+                </button>
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>
+                </button>
+            </div>
+        </div>
+        <div ng-switch-when="HEADING">
+            <ng-include src="'widget-heading.view.client.html'">
+        </div>
+        <div ng-switch-when="IMAGE">
+            <ng-include src="'widget-image.view.client.html'">
+        </div>
+        <div ng-switch-when="YOUTUBE">
+            <ng-include src="'widget-youtube.view.client.html'">
+        </div>
+    </div>
+
+</div>
