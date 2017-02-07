@@ -6,9 +6,11 @@
         .controller("EditWidgetController", EditWidgetController)
     function WidgetListController($routeParams, WidgetService) {
         var vm = this;
+        vm.userId = $routeParams["uid"];
+        vm.websiteId = $routeParams["wid"];
         vm.pageId = $routeParams["pid"];
         function init() {
-            vm.websites = WidgetService.findWidgetsByPageId(vm.pageId);
+            vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
         }
 
         init();

@@ -1,5 +1,29 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <p class="navbar-text pull-left">
+                <a ng-href="#/user/{{model.userId}}/website/{{model.websiteId}}/page" class="navbar-link">
+                    <span class="glyphicon glyphicon-chevron-left">
+                    </span>
+                </a>
+            </p>
+            <a class="navbar-brand">
+                Widgets
+            </a>
+            <p class="navbar-text pull-right">
+                <a ng-click="model.createWebsite(model.website)" class="navbar-link">
+                    <span class="glyphicon glyphicon-ok">
+                    </span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
+
+
 <div class="container-fluid">
-    <div ng-repeat="widget in widgets">k
+    <div ng-repeat="widget in model.widgets">
+        {{widget.widgetType}}
         <div class="toolbar-right">
             <div class="btn-group btn-group-xs" role="group" aria-label="...">
                 <button type="button" class="btn btn-default">
@@ -11,7 +35,8 @@
                 </button>
             </div>
         </div>
-        <div ng-switch-when="HEADING">
+        <div ng-switch-when="HEADER">
+            {{a header}}
             <ng-include src="'widget-heading.view.client.html'">
         </div>
         <div ng-switch-when="IMAGE">
@@ -23,3 +48,16 @@
     </div>
 
 </div>
+
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+        <div class="navbar-header">
+            <p class="navbar-text pull-right">
+                <a ng-href="#/user/{{model.userId}}" class="navbar-link">
+                    <span class="glyphicon glyphicon-user"></span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>

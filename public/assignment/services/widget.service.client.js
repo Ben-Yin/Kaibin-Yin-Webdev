@@ -19,11 +19,11 @@
             {"_id": "789", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
         ];
         var api = {
-            "createWidget": "createWidget",
-            "findWidgetsByPageId": "findWidgetsByPageId",
-            "findWidgetById": "findWidgetById",
-            "updateWidget": "updateWidget",
-            "deleteWidget": "deleteWidget"
+            "createWidget": createWidget,
+            "findWidgetsByPageId": findWidgetsByPageId,
+            "findWidgetById": findWidgetById,
+            "updateWidget": updateWidget,
+            "deleteWidget": deleteWidget
         };
         return api;
         function createWidget(pageId, widget) {
