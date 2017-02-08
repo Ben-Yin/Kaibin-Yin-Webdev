@@ -4,9 +4,9 @@
         .factory("PageService", PageService);
     function PageService() {
         var pages = [
-            {"_id": "321", "name": "Post 1", "websiteId": "567", "title": "Lorem"},
-            {"_id": "432", "name": "Post 2", "websiteId": "567", "title": "Lorem"},
-            {"_id": "543", "name": "Post 3", "websiteId": "567", "title": "Lorem"}
+            {"_id": 321, "name": "Post 1", "websiteId": "567", "title": "Lorem"},
+            {"_id": 432, "name": "Post 2", "websiteId": "567", "title": "Lorem"},
+            {"_id": 543, "name": "Post 3", "websiteId": "567", "title": "Lorem"}
         ];
         var api = {
             "createPage": createPage,
@@ -22,6 +22,7 @@
             page._id = pages[pages.length - 1]._id + 1;
             page.websiteId = websiteId;
             pages.push(page);
+            return page;
         }
 
         function findPageByWebsiteId(websiteId) {

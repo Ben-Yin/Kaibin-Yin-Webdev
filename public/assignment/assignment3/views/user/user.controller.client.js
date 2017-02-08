@@ -36,9 +36,12 @@
             if (user.password != user.passwordAgain) {
                 $window.alert("two input password is not the same, Please check!");
             } else {
-                var user = UserService.createUser(user);
-                if (user) {
-                    $location.url("/user/"+user._id);
+                var newUser = {_id:"", username:"", password:""};
+                newUser.username = user.username;
+                newUser.password = user.password;
+                newUser = UserService.createUser(newUser);
+                if (newUser) {
+                    $location.url("/user/"+newUser._id);
                 }
             }
         }
