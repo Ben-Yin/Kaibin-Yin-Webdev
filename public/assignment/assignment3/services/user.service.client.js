@@ -4,10 +4,10 @@
         .factory("UserService", UserService);
     function UserService() {
         var users = [
-            {_id: 123, username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder"},
-            {_id: 234, username: "bob", password: "bob", firstName: "Bob", lastName: "Marley"},
-            {_id: 345, username: "charly", password: "charly", firstName: "Charly", lastName: "Garcia"},
-            {_id: 456, username: "jannunzi", password: "jannunzi", firstName: "Jose", lastName: "Annunzi"}
+            {"_id": 123, "username": "alice", "password": "alice", "firstName": "Alice", "lastName": "Wonder", "email": "alice@neu.edu"},
+            {"_id": 234, "username": "bob", "password": "bob", "firstName": "Bob", "lastName": "Marley", "email": "bob@neu.edu"},
+            {"_id": 345, "username": "charly", "password": "charly", "firstName": "Charly", "lastName": "Garcia", "email": "charly@neu.edu"},
+            {"_id": 456, "username": "jannunzi", "password": "jannunzi", "firstName": "Jose", "lastName": "Annunzi", "email": "jannunzi@neu.edu"}
         ];
         var api = {
             "createUser": createUser,
@@ -20,10 +20,13 @@
         return api;
 
         function createUser(user) {
-            user._id = users[users.length - 1]._id + 1;
-            users.push(user);
-            console.log(users);
-            return user;
+            if (findUserByUsername(user.username)){
+                return null;
+            } else {
+                user._id = users[users.length - 1]._id + 1;
+                users.push(user);
+                return user;
+            }
         }
 
         function findUserById(id) {
@@ -60,12 +63,15 @@
             return null;
         }
 
-        function updateUser(userId, user) {
-            for (var i = 0; i < users.length; i++) {
-                if (users[i]._id == userId) {
-                    users[i] = user;
-                }
+        function updateUser(userId, newUser) {
+            var user = findUserById(userId);
+            if (user) {
+                user.firstName = newUser.firstName;
+                user.lastName = newUser.lastName;
+                user.email = newUser.email;
+                return user;
             }
+            return null;
         }
 
         function deleteUser(userId) {

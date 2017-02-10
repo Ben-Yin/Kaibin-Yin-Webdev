@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
+    <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand">
                 Profile
@@ -16,11 +16,19 @@
 
 
 <div class="container-fluid">
-
+    <div ng-switch="model.message.type">
+        <div class="alert alert-danger" ng-switch-when="ERROR">
+            {{model.message.content}}
+        </div>
+        <div class="alert alert-success" ng-switch-when="SUCCESS">
+            {{model.message.content}}
+        </div>
+    </div>
     <form class="form">
         <div class="form-group">
             <label for="username">Username</label>
             <input ng-model="model.user.username"
+                   ng-readonly="true"
                    type="text"
                    class="form-control"
                    id="username">

@@ -54,12 +54,20 @@
 
         function init() {
             vm.user = UserService.findUserById(vm.userId);
+            console.log(vm.user);
         }
 
         init();
 
         function updateProfile(user) {
-            UserService.updateUser(vm.userId, user);
+            var newUser = UserService.updateUser(vm.userId, user);
+            console.log(newUser);
+            if (newUser) {
+                vm.message = {type: "SUCCESS", content:"Profile updated!"};
+                init();
+            } else {
+                vm.message = {type: "ERROR", content:"Update profile failed!"};
+            }
         }
     }
 })();

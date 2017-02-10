@@ -22,6 +22,8 @@
         vm.userId = $routeParams["uid"];
 
         function init() {
+            //load websites for landscape showing list
+            vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
         }
 
         init();
@@ -40,6 +42,8 @@
         vm.websiteId = $routeParams["wid"];
 
         function init() {
+            //load websites for landscape showing list
+            vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
             vm.website = WebsiteService.findWebsiteById(vm.websiteId);
         }
 

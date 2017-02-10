@@ -24,6 +24,8 @@
         vm.pageId = $routeParams["pid"];
 
         function init() {
+            //load pages for landscape showing list
+            vm.pages = PageService.findPageByWebsiteId(vm.websiteId);
         }
 
         init();
@@ -43,6 +45,8 @@
         vm.pageId = $routeParams["pid"];
 
         function init() {
+            //load pages for landscape showing list
+            vm.pages = PageService.findPageByWebsiteId(vm.websiteId);
             vm.page = PageService.findPageById(vm.pageId);
         }
 
