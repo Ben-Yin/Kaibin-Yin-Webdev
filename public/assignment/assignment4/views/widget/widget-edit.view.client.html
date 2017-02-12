@@ -2,35 +2,34 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <p class="navbar-text pull-left">
-                <a ng-href="#/user/{{model.userId}}" class="navbar-link">
+                <a ng-href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="navbar-link">
                     <span class="glyphicon glyphicon-chevron-left">
                     </span>
                 </a>
             </p>
             <a class="navbar-brand">
-                Websites
+                Edit Widget
             </a>
             <p class="navbar-text pull-right">
-                <a ng-href="#/user/{{model.userId}}/website/new" class="navbar-link">
-                    <span class="glyphicon glyphicon-plus">
-                    </span>
+                <a ng-click="model.updateWidget(model.widget)" class="navbar-link">
+                  <span class="glyphicon glyphicon-ok">
+                  </span>
                 </a>
             </p>
         </div>
     </div>
 </nav>
 
-
-<div class="container">
-    <ul class="list-group">
-        <li class="list-group-item" ng-repeat="website in model.websites">
-            <a ng-href="#/user/{{model.userId}}/website/{{website._id}}/page">
-                {{website.name}}</a>
-            <a class="pull-right" ng-href="#/user/{{model.userId}}/website/{{website._id}}">
-                <span class="glyphicon glyphicon-cog"></span>
-            </a>
-        </li>
-    </ul>
+<div ng-switch="model.widget.widgetType">
+    <div ng-switch-when="HEADER">
+        <ng-include src="'./views/widget/widget-heading.view.client.html'"></ng-include>
+    </div>
+    <div ng-switch-when="IMAGE">
+        <ng-include src="'./views/widget/widget-image.view.client.html'"></ng-include>
+    </div>
+    <div ng-switch-when="YOUTUBE">
+        <ng-include src="'./views/widget/widget-youtube.view.client.html'"></ng-include>
+    </div>
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">

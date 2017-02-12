@@ -1,0 +1,34 @@
+<div class="container">
+    <form class="form">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input ng-model="model.widget.name"
+                   type="text"
+                   class="form-control"
+                   id="heading-name"
+                   placeholder="Heading Name">
+        </div>
+        <div class="form-group">
+            <label for="text">Text</label>
+            <input ng-model="model.widget.text"
+                   type="text"
+                   class="form-control"
+                   id="heading-text"
+                   placeholder="Heading Text">
+        </div>
+        <div class="form-group">
+            <label for="size">Heading Size</label>
+            <select ng-model="model.widget.size"
+                    class="form-control">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+            </select>
+        </div>
+    </form>
+    <a class="btn btn-danger btn-block"
+       ng-click="model.deleteWidget()">Delete</a>
+</div>
