@@ -54,7 +54,6 @@
 
         function init() {
             vm.user = UserService.findUserById(vm.userId);
-            console.log(vm.user);
         }
 
         init();
