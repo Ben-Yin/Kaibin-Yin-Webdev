@@ -38,7 +38,7 @@
             <div ng-switch-when="HTML">
                 <div ng-bind-html="widget.html"></div>
             </div>
-            <div ng-switch-when="HEADER">
+            <div ng-switch-when="heading">
                 <div ng-switch="widget.size">
                     <div ng-switch-when=1>
                         <h1>{{widget.text}}</h1>
@@ -60,13 +60,13 @@
                     </div>
                 </div>
             </div>
-            <div ng-switch-when="IMAGE">
+            <div ng-switch-when="image">
                 <img ng-src="{{widget.trust_url}}"
                      width="{{widget.width}}"
                      class="img-responsive"
                      alt="Responsive image">
             </div>
-            <div ng-switch-when="YOUTUBE">
+            <div ng-switch-when="youtube">
                 <iframe ng-src="{{widget.trust_url}}"
                         width="{{widget.width}}"
                         height="300px"
@@ -78,14 +78,4 @@
 
 </div>
 
-<nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container">
-        <div class="navbar-header">
-            <p class="navbar-text pull-right">
-                <a ng-href="#/user/{{model.userId}}" class="navbar-link">
-                    <span class="glyphicon glyphicon-user"></span>
-                </a>
-            </p>
-        </div>
-    </div>
-</nav>
+<ng-include src="'./views/fix-content/template/footer.view.client.html'"></ng-include>

@@ -2,16 +2,16 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <p class="navbar-text pull-left">
-                <a ng-href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="navbar-link">
+                <a ng-href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new" class="navbar-link">
                     <span class="glyphicon glyphicon-chevron-left">
                     </span>
                 </a>
             </p>
             <a class="navbar-brand">
-                Edit Widget
+                New Widget
             </a>
             <p class="navbar-text pull-right">
-                <a ng-click="model.updateWidget(model.widget)" class="navbar-link">
+                <a ng-click="model.createWidget(model.widget)" class="navbar-link">
                   <span class="glyphicon glyphicon-ok">
                   </span>
                 </a>
@@ -30,10 +30,6 @@
     </div>
     <div ng-switch-when="youtue">
         <ng-include src="'./views/widget/template/widget-youtube.view.client.html'"></ng-include>
-    </div>
-    <div class="btn-padding">
-        <a class="btn btn-danger btn-block"
-           ng-click="model.deleteWidget()">Delete</a>
     </div>
 </div>
 

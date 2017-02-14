@@ -25,7 +25,7 @@
             } else {
                 user._id = users[users.length - 1]._id + 1;
                 users.push(user);
-                return user;
+                return angular.copy(user);
             }
         }
 
@@ -35,7 +35,7 @@
             while (left <= right) {
                 var mid = parseInt((left + right) / 2);
                 if (users[mid]._id == id) {
-                    return users[mid];
+                    return angular.copy(users[mid]);
                 } else if (users[mid]._id > id) {
                     right = mid - 1;
                 } else {
@@ -46,36 +46,37 @@
         }
 
         function findUserByUsername(username) {
-            for (var i = 0; i < users.length; i++) {
+            for (var i in users) {
                 if (users[i].username == username) {
-                    return users[i];
+                    return angular.copy(users[i]);
                 }
             }
             return null;
         }
 
         function findUserByCredentials(username, password) {
-            for (var i = 0; i < users.length; i++) {
+            for (var i in users) {
                 if (users[i].username == username && users[i].password == password) {
-                    return users[i];
+                    return angular.copy(users[i]);
                 }
             }
             return null;
         }
 
         function updateUser(userId, newUser) {
-            var user = findUserById(userId);
-            if (user) {
-                user.firstName = newUser.firstName;
-                user.lastName = newUser.lastName;
-                user.email = newUser.email;
-                return user;
+            for (var i in users) {
+                if (user) {
+                    user.firstName = newUser.firstName;
+                    user.lastName = newUser.lastName;
+                    user.email = newUser.email;
+                    return user;
+                }
             }
             return null;
         }
 
         function deleteUser(userId) {
-            for (var i = 0; i < users.length; i++) {
+            for (var i in users) {
                 if (users[i]._id == id) {
                     users.splice(i, 1);
                 }
