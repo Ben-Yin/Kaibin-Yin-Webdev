@@ -24,17 +24,17 @@
             website._id = websites[websites.length - 1]._id + 1;
             website.developerId = userId;
             websites.push(website);
-            return website;
+            return angular.copy(website);
         }
 
         function findWebsitesByUser(userId) {
             userWebsites = [];
-            for (var i = 0; i < websites.length; i++) {
+            for (var i in websites) {
                 if (websites[i].developerId == userId) {
-                    userWebsites.push(websites[i])
+                    userWebsites.push(angular.copy(websites[i]))
                 }
             }
-            return userWebsites;
+            return angular.copy(userWebsites);
         }
 
         function findWebsiteById(websiteId) {
@@ -43,7 +43,7 @@
             while (left <= right) {
                 var mid = parseInt((left + right) / 2);
                 if (websites[mid]._id == websiteId) {
-                    return websites[mid];
+                    return angular.copy(websites[mid]);
                 } else if (websites[mid]._id > websiteId) {
                     right = mid - 1;
                 } else {
@@ -54,16 +54,17 @@
         }
 
         function updateWebsite(websiteId, website) {
-            for (var i = 0; i < websites.length; i++) {
+            for (var i in websites) {
                 if (websites[i]._id == websiteId) {
                     websites[i].name = website.name;
                     websites[i].description = website.description;
+                    return angular.copy(websites[i]);
                 }
             }
         }
 
         function deleteWebsite(websiteId) {
-            for (var i = 0; i < websites.length; i++) {
+            for (var i in websites) {
                 if (websites[i]._id == websiteId) {
                     websites.splice(i, 1);
                 }

@@ -1,0 +1,28 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <p class="navbar-text pull-left">
+                <a ng-href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new" class="navbar-link">
+                    <span class="glyphicon glyphicon-chevron-left">
+                    </span>
+                </a>
+            </p>
+            <a class="navbar-brand">
+                New Widget
+            </a>
+            <p class="navbar-text pull-right">
+                <a ng-click="model.createWidget(model.widget)" class="navbar-link">
+                  <span class="glyphicon glyphicon-ok">
+                  </span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid"
+     ng-include="model.getWidgetTemplateUrl(model.widget.widgetType)">
+</div>
+
+
+<ng-include src="'./views/fix-content/templates/footer.view.client.html'"></ng-include>

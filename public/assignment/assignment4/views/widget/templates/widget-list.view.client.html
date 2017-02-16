@@ -38,7 +38,7 @@
             <div ng-switch-when="HTML">
                 <div ng-bind-html="widget.html"></div>
             </div>
-            <div ng-switch-when="HEADER">
+            <div ng-switch-when="HEADING">
                 <div ng-switch="widget.size">
                     <div ng-switch-when=1>
                         <h1>{{widget.text}}</h1>
@@ -78,14 +78,4 @@
 
 </div>
 
-<nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container">
-        <div class="navbar-header">
-            <p class="navbar-text pull-right">
-                <a ng-href="#/user/{{model.userId}}" class="navbar-link">
-                    <span class="glyphicon glyphicon-user"></span>
-                </a>
-            </p>
-        </div>
-    </div>
-</nav>
+<ng-include src="'./views/fix-content/templates/footer.view.client.html'"></ng-include>

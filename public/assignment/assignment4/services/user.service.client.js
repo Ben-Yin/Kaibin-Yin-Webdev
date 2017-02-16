@@ -2,7 +2,7 @@
     angular
         .module("WebAppMaker")
         .factory("UserService", UserService);
-    function UserService() {
+    function UserService($http) {
         var users = [
             {"_id": 123, "username": "alice", "password": "alice", "firstName": "Alice", "lastName": "Wonder", "email": "alice@neu.edu"},
             {"_id": 234, "username": "bob", "password": "bob", "firstName": "Bob", "lastName": "Marley", "email": "bob@neu.edu"},
@@ -25,57 +25,33 @@
             } else {
                 user._id = users[users.length - 1]._id + 1;
                 users.push(user);
-                return user;
+                return angular.copy(user);
             }
         }
 
-        function findUserById(id) {
-            var left = 0;
-            var right = users.length;
-            while (left <= right) {
-                var mid = parseInt((left + right) / 2);
-                if (users[mid]._id == id) {
-                    return users[mid];
-                } else if (users[mid]._id > id) {
-                    right = mid - 1;
-                } else {
-                    left = mid + 1;
-                }
-            }
-            return null;
+        function findUserById(userId) {
+            return $http.get("/api/user/"+userId);
         }
 
         function findUserByUsername(username) {
-            for (var i = 0; i < users.length; i++) {
+            for (var i in users) {
                 if (users[i].username == username) {
-                    return users[i];
+                    return angular.copy(users[i]);
                 }
             }
             return null;
         }
 
         function findUserByCredentials(username, password) {
-            for (var i = 0; i < users.length; i++) {
-                if (users[i].username == username && users[i].password == password) {
-                    return users[i];
-                }
-            }
-            return null;
+            return $http.get("/api/user?name="+username);
         }
 
         function updateUser(userId, newUser) {
-            var user = findUserById(userId);
-            if (user) {
-                user.firstName = newUser.firstName;
-                user.lastName = newUser.lastName;
-                user.email = newUser.email;
-                return user;
-            }
-            return null;
+            $http.put("/api/user/"+userId);
         }
 
         function deleteUser(userId) {
-            for (var i = 0; i < users.length; i++) {
+            for (var i in users) {
                 if (users[i]._id == id) {
                     users.splice(i, 1);
                 }

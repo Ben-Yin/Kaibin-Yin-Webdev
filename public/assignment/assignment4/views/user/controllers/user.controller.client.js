@@ -14,12 +14,10 @@
         init();
 
         function login(user) {
-            user = UserService.findUserByCredentials(user.username, user.password);
-            if (user) {
-                $location.url("/user/" + user._id);
-            } else {
-                $window.alert("Unable to login");
-            }
+            var promise = UserService.findUserByCredentials();
+            promise.success(function () {
+                
+            })
         }
     }
 
@@ -51,9 +49,11 @@
         var vm = this;
         vm.updateProfile = updateProfile;
         vm.userId = $routeParams["uid"];
-
         function init() {
-            vm.user = UserService.findUserById(vm.userId);
+            var promise = UserService.findUserById(vm.userId);
+            promise.success(function (user) {
+                vm.user = user;
+            })
         }
 
         init();

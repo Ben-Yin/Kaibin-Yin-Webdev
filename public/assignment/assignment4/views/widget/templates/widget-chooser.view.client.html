@@ -18,13 +18,13 @@
 <div class="container">
     <ul class="list-group">
         <li class="list-group-item">
-            <a ng-click="model.createWidget('HEADER')")>Header</a>
+            <a ng-click="model.chooseWidgetType('HEADING')">Heading</a>
         </li>
         <li class="list-group-item">
-            <a ng-click="model.createWidget('IMAGE')">Image</a>
+            <a ng-click="model.chooseWidgetType('IMAGE')">Image</a>
         </li>
         <li class="list-group-item">
-            <a ng-click="model.createWidget('YOUTUBE')">YouTube</a>
+            <a ng-click="model.chooseWidgetType('YOUTUBE')">YouTube</a>
         </li>
         <li class="list-group-item">
             <a href="">Label</a>
@@ -50,14 +50,5 @@
     </ul>
 </div>
 
-<nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container">
-        <div class="navbar-header">
-            <p class="navbar-text pull-right">
-                <a ng-href="#/user/{{model.userId}}" class="navbar-link">
-                    <span class="glyphicon glyphicon-user"></span>
-                </a>
-            </p>
-        </div>
-    </div>
-</nav>
+
+<ng-include src="'./views/fix-content/templates/footer.view.client.html'"></ng-include>
