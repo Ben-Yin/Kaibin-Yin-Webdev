@@ -20,22 +20,9 @@
     </div>
 </nav>
 
-<div ng-switch="model.widget.widgetType"
-     class="container-fluid">
-    <div ng-switch-when="heading">
-        <ng-include src="'./views/widget/template/widget-heading.view.client.html'"></ng-include>
-    </div>
-    <div ng-switch-when="image">
-        <ng-include src="'./views/widget/template/widget-image.view.client.html'"></ng-include>
-    </div>
-    <div ng-switch-when="youtube">
-        <ng-include src="'./views/widget/template/widget-youtube.view.client.html'"></ng-include>
-    </div>
-    <div class="btn-padding">
-        <a class="btn btn-danger btn-block"
-           ng-click="model.deleteWidget()">Delete</a>
-    </div>
+<div class="container-fluid"
+     ng-include="model.getWidgetTemplateUrl(model.widget.widgetType)">
 </div>
 
 
-<ng-include src="'./views/fix-content/template/footer.view.client.html'"></ng-include>
+<ng-include src="'./views/fix-content/templates/footer.view.client.html'"></ng-include>

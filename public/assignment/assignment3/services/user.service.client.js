@@ -65,11 +65,11 @@
 
         function updateUser(userId, newUser) {
             for (var i in users) {
-                if (user) {
-                    user.firstName = newUser.firstName;
-                    user.lastName = newUser.lastName;
-                    user.email = newUser.email;
-                    return user;
+                if (users[i]._id == newUser._id) {
+                    users[i].firstName = newUser.firstName;
+                    users[i].lastName = newUser.lastName;
+                    users[i].email = newUser.email;
+                    return angular.copy(users[i]);
                 }
             }
             return null;

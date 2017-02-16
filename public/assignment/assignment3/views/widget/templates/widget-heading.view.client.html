@@ -19,12 +19,12 @@
         <label for="size">Heading Size</label>
         <select ng-model="model.widget.size"
                 class="form-control">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
+            <option ng-selected="model.widget.size==1">1</option>
+            <option ng-selected="model.widget.size==2">2</option>
+            <option ng-selected="model.widget.size==3">3</option>
+            <option ng-selected="model.widget.size==4">4</option>
+            <option ng-selected="model.widget.size==5">5</option>
+            <option ng-selected="model.widget.size==6">6</option>
         </select>
     </div>
 </form>

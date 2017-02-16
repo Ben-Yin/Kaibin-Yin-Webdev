@@ -17,9 +17,9 @@
                 if (vm.widgets[i].widgetType == "HTML") {
                     vm.widgets[i].html = $sce.trustAsHtml(vm.widgets[i].text);
                 }
-                else if (vm.widgets[i].widgetType == "youtube") {
+                else if (vm.widgets[i].widgetType == "YOUTUBE") {
                     vm.widgets[i].trust_url = getYouTubeEmbedUrl(vm.widgets[i].url);
-                } else if (vm.widgets[i].widgetType == "image") {
+                } else if (vm.widgets[i].widgetType == "IMAGE") {
                     vm.widgets[i].trust_url = $sce.trustAsResourceUrl(vm.widgets[i].url);
                 }
             }
@@ -33,12 +33,14 @@
             var url = "https://www.youtube.com/embed/"+id;
             return $sce.trustAsResourceUrl(url);
         }
+
     }
 
     function NewWidgetController($routeParams, $location, WidgetService) {
         var vm = this;
         vm.createWidget = createWidget;
         vm.chooseWidgetType = chooseWidgetType;
+        vm.getWidgetTemplateUrl = getWidgetTemplateUrl;
         vm.userId = $routeParams["uid"];
         vm.websiteId = $routeParams["wid"];
         vm.pageId = $routeParams["pid"];
@@ -59,16 +61,22 @@
         function chooseWidgetType(widgetType) {
             $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/new/"+widgetType);
         }
+
+        function getWidgetTemplateUrl(widgetType) {
+            var url = 'views/widget/templates/widget-' + widgetType + '.view.client.html';
+            return url;
+        }
     }
 
     function EditWidgetController($routeParams, $location, WidgetService) {
         var vm = this;
+        vm.updateWidget = updateWidget;
+        vm.deleteWidget = deleteWidget;
+        vm.getWidgetTemplateUrl = getWidgetTemplateUrl;
         vm.userId = $routeParams["uid"];
         vm.websiteId = $routeParams["wid"];
         vm.pageId = $routeParams["pid"];
         vm.widgetId = $routeParams["wgid"];
-        vm.updateWidget = updateWidget;
-        vm.deleteWidget = deleteWidget;
 
         function init() {
             vm.widget = WidgetService.findWidgetById(vm.widgetId);
@@ -86,5 +94,9 @@
             $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
         }
 
+        function getWidgetTemplateUrl(widgetType) {
+            var url = 'views/widget/templates/widget-' + widgetType + '.view.client.html';
+            return url;
+        }
     }
 })();
