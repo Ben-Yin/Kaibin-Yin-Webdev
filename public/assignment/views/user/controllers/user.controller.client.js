@@ -59,9 +59,10 @@
         }
     }
 
-    function ProfileController($routeParams, UserService) {
+    function ProfileController($location, $routeParams, UserService) {
         var vm = this;
         vm.updateProfile = updateProfile;
+        vm.deleteUser = deleteUser;
         vm.userId = $routeParams.uid;
 
         function init() {
@@ -83,6 +84,23 @@
             } else {
                 vm.message = {type: "ERROR", content:"Update profile failed!"};
             }
+        }
+
+        function deleteUser(user) {
+            var answer = confirm("Are you sure?");
+            console.log(answer);
+            if(answer) {
+                UserService
+                    .deleteUser(user._id)
+                    .success(function () {
+                        console.log("Delete user!");
+                        $location.url("/login");
+                    })
+                    .error(function () {
+                        $window.alert('unable to remove user');
+                    });
+            }
+
         }
     }
 })();
