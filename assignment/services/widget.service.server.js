@@ -12,7 +12,7 @@ module.exports = function (app) {
     app.delete("/api/widget/:widgetId", deleteWidget);
     app.post("/api/upload", upload.single('image-upload-file'), uploadImage);
     app.put("/api/page/:pageId/widget", sortWidget);
-
+    app.get("/api/sign-s3", signS3);
     var widgets = [
         {
             "_id": "123", "widgetType": "HEADING", "pageId": "321", "index": 0,
@@ -95,7 +95,7 @@ module.exports = function (app) {
         var widget = req.body;
         widget._id = parseInt(widgets[widgets.length - 1]._id) + 1;
         widget.pageId = pageId;
-        widget.index = 1;
+        widget.index = 0;
         for (var i in widgets) {
             if (widgets[i].pageId == pageId) {
                 widget.index += 1;
@@ -107,14 +107,25 @@ module.exports = function (app) {
 
     function deleteWidget(req, res) {
         var widgetId = req.params.widgetId;
+        var pageId = -1;
+        var index = -1;
         for (var i in widgets) {
             if (widgets[i]._id == widgetId) {
+                pageId = widgets[i].pageId;
+                index = widgets[i].index;
                 widgets.splice(i, 1);
-                res.sendStatus(200);
-                return;
             }
         }
-        res.sendStatus(404);
+        if (pageId < 0) {
+            res.sendStatus(404);
+            return;
+        }
+        for (var i in widgets) {
+            if (widgets[i].index > index & widgets[i].pageId == pageId) {
+                widgets[i].index -= 1;
+            }
+        }
+        res.sendStatus(200);
     }
 
     function uploadImage(req, res) {
@@ -138,19 +149,45 @@ module.exports = function (app) {
                 // widgets[i].url = "/uploads/" + md5(filename) + "." + format;
                 widgets[i].url = "/uploads/" + filename;
                 widgets[i].width = width;
-                console.log("url:"+widgets[i].url);
-                res.redirect("/assignment/#" + redirectURL);
-                return;
+                // res.redirect("/assignment/#" + redirectURL);
+
             }
         }
-        res.sendStatus(404);
     }
 
+    function signS3(req, res) {
+        var aws = require('aws-sdk');
+        var s3 = aws.S3();
+        var S3_BUCKET = process.env.S3_BUCKET;
+
+        const fileName = req.query.file-name;
+        const fileType = req.query.file-type;
+        const s3Params = {
+            Bucket: S3_BUCKET,
+            Key: fileName,
+            Expires: 60,
+            ContentType: fileType,
+            ACL: 'public-read'
+        };
+
+        s3.getSignedUrl('putObject', s3Params, function(err, data) {
+            if(err){
+                console.log(err);
+                return res.end();
+            }
+            const returnData = {
+                signedRequest: data,
+                url: "https://${S3_BUCKET}.s3.amazonaws.com/${fileName}"
+            };
+            res.write(JSON.stringify(returnData));
+            res.end();
+        });
+    }
+    
     function sortWidget(req, res) {
         var initial = req.query.initial;
         var final = req.query.final;
         var pageId = req.params.pageId;
-        console.log("init, final:"+initial+final);
         if (initial < final) {
             moveUpWidget(pageId, initial, final);
         }

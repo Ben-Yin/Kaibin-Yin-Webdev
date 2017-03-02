@@ -20,19 +20,6 @@
                 .findWidgetsByPageId(vm.pageId)
                 .success(function (widgets) {
                     vm.widgets = widgets;
-                    console.log(vm.widgets);
-                    /*
-                    for (var i in vm.widgets) {
-                        if (vm.widgets[i].widgetType == "HTML") {
-                            vm.widgets[i].html = $sce.trustAsHtml(vm.widgets[i].text);
-                        }
-                        else if (vm.widgets[i].widgetType == "YOUTUBE") {
-                            vm.widgets[i].trust_url = getYouTubeEmbedUrl(vm.widgets[i].url);
-                        } else if (vm.widgets[i].widgetType == "IMAGE") {
-                            vm.widgets[i].trust_url = $sce.trustAsResourceUrl(vm.widgets[i].url);
-                        }
-                    }
-                    */
                 })
                 .error(function () {
                     vm.error = "Load widget list failed!";
@@ -61,10 +48,10 @@
             WidgetService
                 .sortWidget(vm.pageId, initial, final)
                 .success(function () {
-                    console.log("sort success!");
+                    vm.message = "sort success!";
                 })
                 .error(function () {
-                    console.log("sort failed!");
+                    vm.message = "sort failed!";
                 });
         }
     }
@@ -111,6 +98,7 @@
         vm.deleteWidget = deleteWidget;
         vm.getImageURL = getImageURL;
         vm.getWidgetTemplateUrl = getWidgetTemplateUrl;
+        vm.uploadFileChange = uploadFileChange;
         vm.userId = $routeParams["uid"];
         vm.websiteId = $routeParams["wid"];
         vm.pageId = $routeParams["pid"];
@@ -172,6 +160,52 @@
         function getWidgetTemplateUrl(widgetType) {
             var url = 'views/widget/templates/widget-' + widgetType + '.view.client.html';
             return url;
+        }
+
+        function uploadFileChange() {
+            const files = vm.file;
+            console.log(files);
+            const file = files[0];
+            if(file == null){
+                return alert('No file selected.');
+            }
+            getSignedRequest(file);
+        }
+        
+        function getSignedRequest(file){
+            console.log("getChange!");
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', '/sign-s3?file-name=${file.name}&file-type=${file.type}');
+            xhr.onreadystatechange = function (){
+                if(xhr.readyState === 4){
+                    if(xhr.status === 200){
+                        const response = JSON.parse(xhr.responseText);
+                        console.log(response);
+                        uploadFile(file, response.signedRequest, response.url);
+                    }
+                    else{
+                        alert('Could not get signed URL.');
+                    }
+                }
+            };
+            xhr.send();
+        }
+        function uploadFile(file, signedRequest, url){
+            const xhr = new XMLHttpRequest();
+            xhr.open('PUT', signedRequest);
+            xhr.onreadystatechange = function () {
+                if(xhr.readyState === 4){
+                    if(xhr.status === 200){
+                        vm.preview = url;
+                        vm.widget.url = url;
+                        console.log(url);
+                    }
+                    else{
+                        alert('Could not upload file.');
+                    }
+                }
+            };
+            xhr.send(file);
         }
     }
 })();

@@ -1,6 +1,6 @@
 (function () {
     angular
-        .module("WebAppMaker")
+        .module("WbdvDirective", [])
         .directive("wbdvSortable", wbdvSortable);
 
 
