@@ -1,0 +1,48 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <p class="navbar-text pull-left">
+                <a ng-href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="navbar-link">
+                    <span class="glyphicon glyphicon-chevron-left">
+                    </span>
+                </a>
+            </p>
+            <a class="navbar-brand">
+                Edit Widget
+            </a>
+            <p class="navbar-text pull-right">
+                <a ng-click="model.updateWidget(model.widget)" class="navbar-link">
+                  <span class="glyphicon glyphicon-ok">
+                  </span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div ng-switch="model.message.type">
+        <div class="alert alert-danger" ng-switch-when="ERROR">
+            {{model.message.content}}
+        </div>
+        <div class="alert alert-success" ng-switch-when="SUCCESS">
+            {{model.message.content}}
+        </div>
+    </div>
+    <div ng-switch="model.widget.widgetType">
+        <div ng-switch-when="HEADING">
+            <ng-include src="'views/widget/templates/editor/widget-HEADING.view.client.html'"></ng-include>
+        </div>
+        <div ng-switch-when="IMAGE">
+            <ng-include src="'views/widget/templates/editor/widget-IMAGE.view.client.html'"></ng-include>
+        </div>
+        <div ng-switch-when="YOUTUBE">
+            <ng-include src="'views/widget/templates/editor/widget-YOUTUBE.view.client.html'"></ng-include>
+        </div>
+        <a ng-click="model.deleteWidget()" class="btn btn-block btn-danger btn-margin">Delete</a>
+    </div>
+    <!--<ng-include src="model.getWidgetTemplateUrl(model.widget.widgetType)"></ng-include>-->
+</div>
+
+
+<ng-include src="'./views/fix-content/templates/footer.view.client.html'"></ng-include>

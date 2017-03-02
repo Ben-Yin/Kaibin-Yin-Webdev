@@ -1,0 +1,70 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <p class="navbar-text pull-left">
+                <a ng-href="#/user/{{model.userId}}" class="navbar-link">
+                    <span class="glyphicon glyphicon-chevron-left">
+                    </span>
+                </a>
+            </p>
+            <a class="navbar-brand">
+                Websites
+            </a>
+            <p class="navbar-text pull-right">
+                <a ng-href="#/user/{{model.userId}}/website/new" class="navbar-link">
+                    <span class="glyphicon glyphicon-plus">
+                    </span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-xs-6">
+                    Name
+                    <a>
+                        <span class="glyphicon glyphicon-triangle-top"></span>
+                    </a>
+                </div>
+                <div class="col-xs-3 hidden-xs">
+                    Last Updated
+                    <a>
+                        <span class="glyphicon glyphicon-triangle-top"></span>
+                    </a>
+                </div>
+                <div class="col-xs-2 hidden-xs">
+                    Owner
+                    <a>
+                        <span class="glyphicon glyphicon-triangle-top"></span>
+                    </a>
+                </div>
+
+            </div>
+        </li>
+        <li class="list-group-item" ng-repeat="website in model.websites">
+            <div class="row">
+                <div class="col-xs-6">
+                    <a ng-href="#/user/{{model.userId}}/website/{{website._id}}/page">
+                        {{website.name}}
+                    </a>
+                </div>
+                <div class="col-xs-3 hidden-xs">
+                    {{website.update}}
+                </div>
+                <div class="col-xs-2 hidden-xs">
+                    {{website.developerId}}
+                </div>
+                <a class="pull-right" ng-href="#/user/{{model.userId}}/website/{{website._id}}">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </a>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<ng-include src="'./views/fix-content/templates/footer.view.client.html'"></ng-include>

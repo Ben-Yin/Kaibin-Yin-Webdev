@@ -4,14 +4,14 @@
         .factory("WidgetService", WidgetService);
     function WidgetService() {
         var widgets = [
-            {"_id": 123, "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
-            {"_id": 234, "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
+            {"_id": 123, "widgetType": "HEADER", "pageId": "321", "size": 2, "text": "GIZMODO"},
+            {"_id": 234, "widgetType": "HEADER", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
             {
                 "_id": 345, "widgetType": "IMAGE", "pageId": "321", "width": "100%",
                 "url": "http://lorempixel.com/400/200/"
             },
             {"_id": 456, "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"},
-            {"_id": 567, "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
+            {"_id": 567, "widgetType": "HEADER", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
             {
                 "_id": 678, "widgetType": "YOUTUBE", "pageId": "321", "width": "100%",
                 "url": "https://www.youtube.com/embed/AM2Ivdi9c4E"
@@ -31,17 +31,17 @@
             widget._id = widgets[widgets.length - 1]._id + 1;
             widget.pageId = pageId;
             widgets.push(widget);
-            return angular.copy(widget);
+            return widget;
         }
 
         function findWidgetsByPageId(pageId) {
             PageWidgets = [];
-            for (var i in widgets) {
+            for (var i = 0; i < widgets.length; i++) {
                 if (widgets[i].pageId == pageId) {
-                    PageWidgets.push(angular.copy(widgets[i]));
+                    PageWidgets.push(widgets[i]);
                 }
             }
-            return angular.copy(PageWidgets);
+            return PageWidgets;
         }
 
         function findWidgetById(widgetId) {
@@ -50,7 +50,7 @@
             while (left <= right) {
                 var mid = parseInt((left + right) / 2);
                 if (widgets[mid]._id == widgetId) {
-                    return angular.copy(widgets[mid]);
+                    return widgets[mid];
                 } else if (widgets[mid]._id > widgetId) {
                     right = mid - 1;
                 } else {
@@ -63,8 +63,7 @@
         function updateWidget(widgetId, widget) {
             for (var i = 0; i < widgets.length; i++) {
                 if (widgets[i]._id == widgetId) {
-                    widgets[i] = angular.copy(widget);
-                    return angular.copy(widgets[i]);
+                    widgets[i] = widget;
                 }
             }
         }

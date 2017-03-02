@@ -22,17 +22,17 @@
             page._id = pages[pages.length - 1]._id + 1;
             page.websiteId = websiteId;
             pages.push(page);
-            return angular.copy(page);
+            return page;
         }
 
         function findPageByWebsiteId(websiteId) {
             var websitePages = [];
-            for (var i in pages) {
+            for (var i = 0; i < pages.length; i++) {
                 if (pages[i].websiteId == websiteId) {
-                    websitePages.push(angular.copy(pages[i]));
+                    websitePages.push(pages[i]);
                 }
             }
-            return angular.copy(websitePages);
+            return websitePages;
         }
 
         function findPageById(pageId) {
@@ -41,7 +41,7 @@
             while (left <= right) {
                 var mid = parseInt((left + right) / 2);
                 if (pages[mid]._id == pageId) {
-                    return angular.copy(pages[mid]);
+                    return pages[mid];
                 } else if (pages[mid]._id > pageId) {
                     right = mid - 1;
                 } else {
@@ -52,18 +52,16 @@
         }
 
         function updatePage(pageId, page) {
-            for (var i in pages) {
+            for (var i = 0; i < pages.length; i++) {
                 if (pages[i]._id == pageId) {
                     pages[i].name = page.name;
                     pages[i].title = page.title;
-                    return angular.copy(pages[i]);
                 }
             }
-            return null;
         }
 
         function deletePage(pageId) {
-            for (var i in pages) {
+            for (var i = 0; i < pages.length; i++) {
                 if (pages[i]._id == pageId) {
                     pages.splice(i, 1);
                 }

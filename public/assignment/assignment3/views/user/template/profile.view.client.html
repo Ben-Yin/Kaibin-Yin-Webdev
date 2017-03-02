@@ -1,0 +1,75 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">
+                Profile
+            </a>
+            <p class="navbar-text pull-right">
+                <a class="navbar-link" ng-click="model.updateProfile(model.user)">
+                    <span class="glyphicon glyphicon-ok">
+                    </span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div ng-switch="model.message.type">
+        <div class="alert alert-danger" ng-switch-when="ERROR">
+            {{model.message.content}}
+        </div>
+        <div class="alert alert-success" ng-switch-when="SUCCESS">
+            {{model.message.content}}
+        </div>
+    </div>
+    <form class="form">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input ng-model="model.user.username"
+                   ng-readonly="true"
+                   type="text"
+                   class="form-control"
+                   id="username">
+        </div>
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input ng-model="model.user.email"
+                   type="email"
+                   class="form-control"
+                   id="email">
+        </div>
+        <div class="form-group">
+            <label for="first-name">First Name</label>
+            <input ng-model="model.user.firstName"
+                   type="text"
+                   class="form-control"
+                   id="first-name">
+        </div>
+        <div class="form-group">
+            <label for="last-name">Last Name</label>
+            <input ng-model="model.user.lastName"
+                   type="text"
+                   class="form-control"
+                   id="last-name">
+        </div>
+    </form>
+
+    <a class="btn btn-primary btn-block"
+       ng-href="#/user/{{model.user._id}}/website" >Websites</a>
+    <a class="btn btn-danger  btn-block"
+       href="#/login">Logout</a>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+        <div class="navbar-header">
+            <p class="navbar-text pull-right">
+                <a ng-href="#/user/{{model.user._id}}" class="navbar-link">
+                    <span class="glyphicon glyphicon-user"></span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>

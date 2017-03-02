@@ -1,0 +1,29 @@
+<div class="container-fluid sortable-widgets">
+    <div ng-repeat="widget in model.widgets | orderBy:'index'">
+        <div class="toolbar-right">
+            <div class="btn-group btn-group-xs" role="group" aria-label="...">
+                <button type="button" class="btn btn-default">
+                    <a ng-href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{widget._id}}">
+                        <span class="glyphicon glyphicon-cog"></span>
+                    </a>
+                </button>
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span>
+                </button>
+            </div>
+        </div>
+        <div ng-switch="widget.widgetType">
+            <div ng-switch-when="HTML">
+                <div ng-bind-html="model.getTrustHTML(widget.text)"></div>
+            </div>
+            <div ng-switch-when="HEADING">
+                <ng-include src="'views/widget/templates/list/widget-list-HEADING.view.client.html'"></ng-include>
+            </div>
+            <div ng-switch-when="IMAGE">
+                <ng-include src="'views/widget/templates/list/widget-list-IMAGE.view.client.html'"></ng-include>
+            </div>
+            <div ng-switch-when="YOUTUBE">
+                <ng-include src="'views/widget/templates/list/widget-list-YOUTUBE.view.client.html'"></ng-include>
+            </div>
+        </div>
+    </div>
+</div >

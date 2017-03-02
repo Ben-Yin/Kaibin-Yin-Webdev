@@ -1,23 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app='WebAppMaker'>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Assignment List</title>
+
+    <title>Assignment</title>
+
+    <!--import from CDN: jQuery-->
+    <script
+            src="http://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script
+            src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
+
+    <!--CSS-->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="css/style.css" rel="stylesheet"/>
+
+    <!--Configurations-->
+    <script src="app.js"></script>
+    <script src="config.js"></script>
+
+    <!--Services-->
+    <script src="services/user.service.client.js"></script>
+    <script src="services/website.service.client.js"></script>
+    <script src="services/widget.service.client.js"></script>
+    <script src="services/page.service.client.js"></script>
+
+    <!--Controllers-->
+    <script src="views/user/controllers/user.controller.client.js"></script>
+    <script src="views/website/controllers/website.controller.client.js"></script>
+    <script src="views/page/controllers/page.controller.client.js"></script>
+    <script src="views/widget/controllers/widget.controller.client.js"></script>
+
+    <!--Directives-->
+    <script src="directives/wbdv-sortable.js"></script>
+
 </head>
 <body>
-<div class="container">
-    <h1>Assignment Home Page</h1>
-    <ul class="list-group">
-        <li class="list-group-item">
-            <a href="./assignment2/index.html">Assignment2</a>
-        </li>
-        <li class="list-group-item">
-            <a href="./assignment3/index.html">Assignment3</a>
-        </li>
-    </ul>
+<div ng-view>
 </div>
 </body>
 </html>
