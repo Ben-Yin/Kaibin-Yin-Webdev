@@ -149,7 +149,7 @@ module.exports = function (app) {
                 // widgets[i].url = "/uploads/" + md5(filename) + "." + format;
                 widgets[i].url = "/uploads/" + filename;
                 widgets[i].width = width;
-                // res.redirect("/assignment/#" + redirectURL);
+                res.redirect("/assignment/#" + redirectURL);
 
             }
         }
