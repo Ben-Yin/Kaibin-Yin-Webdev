@@ -10,6 +10,7 @@
         vm.getTrustHTML = getTrustHTML;
         vm.getTrustUrl = getTrustUrl;
         vm.getYouTubeEmbedUrl = getYouTubeEmbedUrl;
+        vm.getWidgetTemplateUrl = getWidgetTemplateUrl;
         vm.userId = $routeParams["uid"];
         vm.websiteId = $routeParams["wid"];
         vm.pageId = $routeParams["pid"];
@@ -40,7 +41,7 @@
         function getYouTubeEmbedUrl(widgetUrl) {
             var urlParts = widgetUrl.split('/');
             var id = urlParts[urlParts.length - 1];
-            var url = "https://www.youtube.com/embed/"+id;
+            var url = "https://www.youtube.com/embed/" + id;
             return $sce.trustAsResourceUrl(url);
         }
 
@@ -53,6 +54,11 @@
                 .error(function () {
                     vm.message = "sort failed!";
                 });
+        }
+
+        function getWidgetTemplateUrl(widgetType) {
+            var url = 'views/widget/templates/list/widget-list-' + widgetType + '.view.client.html';
+            return url;
         }
     }
 
@@ -79,7 +85,7 @@
                 .success(function (newWidget) {
                     vm.widget = newWidget;
                     vm.widgetId = newWidget._id;
-                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/"+vm.widgetId);
+                    $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/" + vm.widgetId);
                 })
                 .error(function () {
                     vm.error = "Create new Widget Failed!";
@@ -87,7 +93,7 @@
         }
 
         function chooseWidgetType(widgetType) {
-            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget/new/"+widgetType);
+            $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/new/" + widgetType);
         }
 
     }
@@ -96,9 +102,8 @@
         var vm = this;
         vm.updateWidget = updateWidget;
         vm.deleteWidget = deleteWidget;
-        vm.getImageURL = getImageURL;
         vm.getWidgetTemplateUrl = getWidgetTemplateUrl;
-        vm.uploadFileChange = uploadFileChange;
+        vm.requestUploadFile = requestUploadFile;
         vm.userId = $routeParams["uid"];
         vm.websiteId = $routeParams["wid"];
         vm.pageId = $routeParams["pid"];
@@ -109,11 +114,13 @@
                 .findWidgetById(vm.widgetId)
                 .success(function (widget) {
                     vm.widget = widget;
+                    vm.uploadFile = null;
+                    vm.responseStatus = 0;
                 })
                 .error(function () {
                     vm.message = {
-                        "type"    : "ERROR",
-                        "content" : "Load widget information failed!"
+                        "type": "ERROR",
+                        "content": "Load widget information failed!"
                     };
                 });
         }
@@ -125,14 +132,14 @@
                 .success(function (newWidget) {
                     vm.widget = newWidget;
                     vm.message = {
-                        "type"    : "SUCCESS",
-                        "content" : "Widget updated!"
+                        "type": "SUCCESS",
+                        "content": "Widget updated!"
                     };
                 })
                 .error(function () {
                     vm.message = {
-                        "type"    : "ERROR",
-                        "content" : "Update widget failed!"
+                        "type": "ERROR",
+                        "content": "Update widget failed!"
                     };
                 });
             // $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
@@ -142,65 +149,70 @@
             WidgetService
                 .deleteWidget(vm.widgetId)
                 .success(function () {
-                    $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
+                    $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget");
                 })
                 .error(function () {
                     vm.message = {
-                        "type"    : "ERROR",
-                        "content" : "Delete widget failed!"
+                        "type": "ERROR",
+                        "content": "Delete widget failed!"
                     };
 
                 });
         }
 
-        function getImageURL() {
-            return "/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget";
-        }
-
         function getWidgetTemplateUrl(widgetType) {
-            var url = 'views/widget/templates/widget-' + widgetType + '.view.client.html';
-            return url;
+            if (widgetType) {
+                var url = 'views/widget/templates/editor/widget-' + widgetType + '.view.client.html';
+                return url;
+            }
+
         }
 
-        function uploadFileChange() {
-            const files = vm.file;
-            console.log(files);
-            const file = files[0];
-            if(file == null){
+        function requestUploadFile() {
+            const file = vm.uploadFile;
+            if (file == null) {
                 return alert('No file selected.');
             }
             getSignedRequest(file);
         }
-        
-        function getSignedRequest(file){
-            console.log("getChange!");
+
+        function getSignedRequest(file) {
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', '/sign-s3?file-name=${file.name}&file-type=${file.type}');
-            xhr.onreadystatechange = function (){
-                if(xhr.readyState === 4){
-                    if(xhr.status === 200){
+            xhr.open('GET', "/api/sign-s3?fileName=" + file.name + "&fileType=" + file.type);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
                         const response = JSON.parse(xhr.responseText);
-                        console.log(response);
                         uploadFile(file, response.signedRequest, response.url);
                     }
-                    else{
+                    else {
                         alert('Could not get signed URL.');
                     }
                 }
             };
             xhr.send();
         }
-        function uploadFile(file, signedRequest, url){
+
+        function uploadFile(file, signedRequest, url) {
             const xhr = new XMLHttpRequest();
             xhr.open('PUT', signedRequest);
             xhr.onreadystatechange = function () {
-                if(xhr.readyState === 4){
-                    if(xhr.status === 200){
-                        vm.preview = url;
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        vm.responseStatus = xhr.status;
                         vm.widget.url = url;
-                        console.log(url);
+                        WidgetService
+                            .updateWidget(vm.widgetId, vm.widget)
+                            .success(function (newWidget) {
+                                vm.widget = newWidget;
+                                vm.message = {
+                                    "type": "SUCCESS",
+                                    "content": "Image Uploaded successful!"
+                                };
+                            })
+
                     }
-                    else{
+                    else {
                         alert('Could not upload file.');
                     }
                 }

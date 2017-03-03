@@ -29,19 +29,8 @@
             {{model.message.content}}
         </div>
     </div>
-    <div ng-switch="model.widget.widgetType">
-        <div ng-switch-when="HEADING">
-            <ng-include src="'views/widget/templates/editor/widget-HEADING.view.client.html'"></ng-include>
-        </div>
-        <div ng-switch-when="IMAGE">
-            <ng-include src="'views/widget/templates/editor/widget-IMAGE.view.client.html'"></ng-include>
-        </div>
-        <div ng-switch-when="YOUTUBE">
-            <ng-include src="'views/widget/templates/editor/widget-YOUTUBE.view.client.html'"></ng-include>
-        </div>
-        <a ng-click="model.deleteWidget()" class="btn btn-block btn-danger btn-margin">Delete</a>
-    </div>
-    <!--<ng-include src="model.getWidgetTemplateUrl(model.widget.widgetType)"></ng-include>-->
+    <ng-include src="model.getWidgetTemplateUrl(model.widget.widgetType)"></ng-include>
+    <a ng-click="model.deleteWidget()" class="btn btn-block btn-danger btn-margin">Delete</a>
 </div>
 
 

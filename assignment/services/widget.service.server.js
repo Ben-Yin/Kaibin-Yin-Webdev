@@ -13,6 +13,7 @@ module.exports = function (app) {
     app.post("/api/upload", upload.single('image-upload-file'), uploadImage);
     app.put("/api/page/:pageId/widget", sortWidget);
     app.get("/api/sign-s3", signS3);
+
     var widgets = [
         {
             "_id": "123", "widgetType": "HEADING", "pageId": "321", "index": 0,
@@ -138,7 +139,6 @@ module.exports = function (app) {
         var originalname  = uploadFile.originalname; // file name on user's computer
         var filename      = uploadFile.filename;     // new file name in upload folder
         var format        = uploadFile.originalname.split(".").pop();
-        console.log("f:"+format);
         var path          = uploadFile.path;         // full path of uploaded file
         var destination   = uploadFile.destination;  // folder where file is saved to
         var size          = uploadFile.size;
@@ -157,11 +157,11 @@ module.exports = function (app) {
 
     function signS3(req, res) {
         var aws = require('aws-sdk');
-        var s3 = aws.S3();
+        var s3 = new aws.S3();
         var S3_BUCKET = process.env.S3_BUCKET;
 
-        const fileName = req.query.file-name;
-        const fileType = req.query.file-type;
+        const fileName = req.query.fileName;
+        const fileType = req.query.fileType;
         const s3Params = {
             Bucket: S3_BUCKET,
             Key: fileName,
@@ -177,7 +177,7 @@ module.exports = function (app) {
             }
             const returnData = {
                 signedRequest: data,
-                url: "https://${S3_BUCKET}.s3.amazonaws.com/${fileName}"
+                url: "https://"+S3_BUCKET+".s3.amazonaws.com/"+fileName
             };
             res.write(JSON.stringify(returnData));
             res.end();
@@ -199,25 +199,29 @@ module.exports = function (app) {
 
     function moveUpWidget(pageId, i, j) {
         for (var w in widgets) {
-            if (widgets[w].index > i && widgets[w].index <= j && widgets[w].pageId == pageId) {
-                console.log(widgets[w].index);
-                widgets[w].index -= 1;
+            if (widgets[w].pageId == pageId) {
+                if (widgets[w].index > i && widgets[w].index <= j) {
+                    widgets[w].index -= 1;
+                }
+                else if (widgets[w].index == i) {
+                    widgets[w].index = parseInt(j);
+                }
             }
-            else if (widgets[w].index == i && widgets[w].pageId == pageId) {
-                widgets[w].index = parseInt(j);
-            }
+
         }
     }
 
     function moveDownWidget(pageId, i, j) {
         for (var w in widgets) {
-            if (widgets[w].index < i && widgets[w].index >= j && widgets[w].pageId == pageId) {
-                console.log(widgets[w].index);
-                widgets[w].index += 1;
+            if (widgets[w].pageId == pageId) {
+                if (widgets[w].index < i && widgets[w].index >= j) {
+                    widgets[w].index += 1;
+                }
+                else if (widgets[w].index == i) {
+                    widgets[w].index = parseInt(j);
+                }
             }
-            else if (widgets[w].index == i && widgets[w].pageId == pageId) {
-                widgets[w].index = parseInt(j);
-            }
+
         }
     }
 };
