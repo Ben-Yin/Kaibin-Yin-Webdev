@@ -13,6 +13,7 @@ module.exports = function (app) {
     app.post("/api/upload", upload.single('image-upload-file'), uploadImage);
     app.put("/api/page/:pageId/widget", sortWidget);
     app.get("/api/sign-s3", signS3);
+    app.delete("/api/delete-s3", deleteS3Obj);
 
     var widgets = [
         {
@@ -158,7 +159,7 @@ module.exports = function (app) {
     function signS3(req, res) {
         var aws = require('aws-sdk');
         var s3 = new aws.S3();
-        var S3_BUCKET = process.env.S3_BUCKET;
+        const S3_BUCKET = process.env.S3_BUCKET;
 
         const fileName = req.query.fileName;
         const fileType = req.query.fileType;
@@ -183,7 +184,24 @@ module.exports = function (app) {
             res.end();
         });
     }
-    
+
+    function deleteS3Obj(req, res) {
+        var aws = require('aws-sdk');
+        var s3 = new aws.S3();
+        const S3_BUCKET = process.env.S3_BUCKET;
+
+        const fileName = req.query.fileName;
+        const s3Params = {
+            Bucket: S3_BUCKET,
+            Key: fileName
+        };
+
+        s3.deleteObject(s3Params, function(err, data) {
+            if (err) console.log(err, err.stack); // an error occurred
+            else     console.log(data);           // successful response
+        });
+    }
+
     function sortWidget(req, res) {
         var initial = req.query.initial;
         var final = req.query.final;

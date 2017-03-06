@@ -201,6 +201,7 @@
                     if (xhr.status === 200) {
                         vm.responseStatus = xhr.status;
                         vm.widget.url = url;
+                        vm.widget.fileName = file.name;
                         WidgetService
                             .updateWidget(vm.widgetId, vm.widget)
                             .success(function (newWidget) {
