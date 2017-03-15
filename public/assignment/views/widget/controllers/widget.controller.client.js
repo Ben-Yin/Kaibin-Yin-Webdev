@@ -3,7 +3,9 @@
         .module("WebAppMaker")
         .controller("WidgetListController", WidgetListController)
         .controller("NewWidgetController", NewWidgetController)
-        .controller("EditWidgetController", EditWidgetController);
+        .controller("EditWidgetController", EditWidgetController)
+        .controller("FlickrImageSearchController", FlickrImageSearchController);
+    
     function WidgetListController($routeParams, $sce, WidgetService) {
         var vm = this;
         vm.sortWidgets = sortWidgets;
@@ -11,10 +13,10 @@
         vm.getTrustUrl = getTrustUrl;
         vm.getYouTubeEmbedUrl = getYouTubeEmbedUrl;
         vm.getWidgetTemplateUrl = getWidgetTemplateUrl;
-        vm.userId = $routeParams["uid"];
-        vm.websiteId = $routeParams["wid"];
-        vm.pageId = $routeParams["pid"];
-        vm.widgetId = $routeParams["wgid"];
+        vm.userId = $routeParams.uid;
+        vm.websiteId = $routeParams.wid;
+        vm.pageId = $routeParams.pid;
+        vm.widgetId = $routeParams.wgid;
 
         function init() {
             WidgetService
@@ -66,10 +68,10 @@
         var vm = this;
         vm.createWidget = createWidget;
         vm.chooseWidgetType = chooseWidgetType;
-        vm.userId = $routeParams["uid"];
-        vm.websiteId = $routeParams["wid"];
-        vm.pageId = $routeParams["pid"];
-        vm.widgetId = $routeParams["wgid"];
+        vm.userId = $routeParams.uid;
+        vm.websiteId = $routeParams.wid;
+        vm.pageId = $routeParams.pid;
+        vm.widgetId = $routeParams.wgid;
 
         function init() {
         }
@@ -104,10 +106,11 @@
         vm.deleteWidget = deleteWidget;
         vm.getWidgetTemplateUrl = getWidgetTemplateUrl;
         vm.requestUploadFile = requestUploadFile;
-        vm.userId = $routeParams["uid"];
-        vm.websiteId = $routeParams["wid"];
-        vm.pageId = $routeParams["pid"];
-        vm.widgetId = $routeParams["wgid"];
+        vm.searchFromFlickr = searchFromFlickr;
+        vm.userId = $routeParams.uid;
+        vm.websiteId = $routeParams.wid;
+        vm.pageId = $routeParams.pid;
+        vm.widgetId = $routeParams.wgid;
 
         function init() {
             WidgetService
@@ -129,8 +132,7 @@
 
         function updateWidget(widget) {
             WidgetService.updateWidget(vm.widgetId, widget)
-                .success(function (newWidget) {
-                    vm.widget = newWidget;
+                .success(function (status) {
                     vm.message = {
                         "type": "SUCCESS",
                         "content": "Widget updated!"
@@ -173,52 +175,62 @@
             if (file == null) {
                 return alert('No file selected.');
             }
-            getSignedRequest(file);
+            WidgetService
+                .getSignedRequest(file)
+                .success(function (newWidget) {
+                    vm.widget = newWidget;
+                    vm.message = {
+                        "type": "SUCCESS",
+                        "content": "Image Uploaded successful!"
+                    };
+                });
         }
 
-        function getSignedRequest(file) {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', "/api/sign-s3?fileName=" + file.name + "&fileType=" + file.type);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        const response = JSON.parse(xhr.responseText);
-                        uploadFile(file, response.signedRequest, response.url);
-                    }
-                    else {
-                        alert('Could not get signed URL.');
-                    }
-                }
-            };
-            xhr.send();
-        }
-
-        function uploadFile(file, signedRequest, url) {
-            const xhr = new XMLHttpRequest();
-            xhr.open('PUT', signedRequest);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        vm.responseStatus = xhr.status;
-                        vm.widget.url = url;
-                        vm.widget.fileName = file.name;
-                        WidgetService
-                            .updateWidget(vm.widgetId, vm.widget)
-                            .success(function (newWidget) {
-                                vm.widget = newWidget;
-                                vm.message = {
-                                    "type": "SUCCESS",
-                                    "content": "Image Uploaded successful!"
-                                };
-                            })
-
-                    }
-                    else {
-                        alert('Could not upload file.');
-                    }
-                }
-            };
-            xhr.send(file);
+        function searchFromFlickr() {
+            $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/" + vm.widgetId + "/flickr");
         }
     }
+    
+    function FlickrImageSearchController($sce, $routeParams, FlickrService) {
+        var vm = this;
+        vm.searchPhotos = searchPhotos;
+        vm.getPhotoUrl = getPhotoUrl;
+        vm.userId = $routeParams.uid;
+        vm.websiteId = $routeParams.wid;
+        vm.pageId = $routeParams.pid;
+        vm.widgetId = $routeParams.wgid;
+
+        function init() {
+        }
+        init();
+
+        function searchPhotos(searchTerm) {
+            FlickrService
+                .getSearchUrl(searchTerm)
+                .success(function (url) {
+                    FlickrService
+                        .searchPhotos(url)
+                        .success(function (res) {
+                            data = res.replace("jsonFlickrApi(","");
+                            data = data.substring(0,data.length - 1);
+                            data = JSON.parse(data);
+                            vm.photos = data.photos;
+                            console.log(vm.photos);
+                        })
+                });
+
+        }
+
+        function getPhotoUrl(photo) {
+            var farm = parseInt(photo.farm);
+            var server = parseInt(photo.server);
+            var id = parseInt(photo.id);
+            var secret = parseInt(photo.secret);
+            var url = "https://farm"+farm+".staticflickr.com/"+server+"/"+id+"_"+secret+"_s.jpg";
+            console.log(url);
+            return $sce.trustAsResourceUrl(url);
+        }
+
+    }
+
 })();

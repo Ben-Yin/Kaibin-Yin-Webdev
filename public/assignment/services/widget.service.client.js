@@ -9,7 +9,8 @@
             "findWidgetById": findWidgetById,
             "updateWidget": updateWidget,
             "deleteWidget": deleteWidget,
-            "sortWidget": sortWidget
+            "sortWidget": sortWidget,
+            "getSignedRequest": getSignedRequest,
         };
 
         return api;
@@ -36,6 +37,46 @@
 
         function sortWidget(pageId, initial, final) {
             return $http.put("/api/page/"+pageId+"/widget?initial="+initial+"&final="+final);
+        }
+
+        function getSignedRequest(widget, file) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', "/api/sign-s3?fileName=" + file.name + "&fileType=" + file.type);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        return uploadFile(widget, file, response.signedRequest, response.url);
+                    }
+                    else {
+                        alert('Could not get signed URL.');
+                        return $http.get("");
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+        function uploadFile(widget, file, signedRequest, url) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('PUT', signedRequest);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        widget.url = url;
+                        widget.fileName = file.name;
+                    }
+                    else {
+                        alert('Could not upload file.');
+                    }
+                }
+            };
+            xhr.send(file);
+            if (xhr.status == 200) {
+                return updateWidget(widget._id, widget);
+            } else {
+                return $http.get("");
+            }
         }
     }
 })();

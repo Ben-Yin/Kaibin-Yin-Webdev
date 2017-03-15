@@ -1,5 +1,4 @@
 module.exports = function () {
-    console.log("In SERVER website.schema.server.js");
     var mongoose = require("mongoose");
     var WebsiteSchema = mongoose.Schema({
         _user: {

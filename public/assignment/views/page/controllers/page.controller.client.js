@@ -6,8 +6,8 @@
         .controller("EditPageController", EditPageController);
     function PageListController($routeParams, PageService) {
         var vm = this;
-        vm.userId = $routeParams["uid"];
-        vm.websiteId = $routeParams["wid"];
+        vm.userId = $routeParams.uid;
+        vm.websiteId = $routeParams.wid;
 
         function init() {
             PageService
@@ -26,9 +26,9 @@
     function NewPageController($routeParams, $location, PageService) {
         var vm = this;
         vm.createPage = createPage;
-        vm.userId = $routeParams["uid"];
-        vm.websiteId = $routeParams["wid"];
-        vm.pageId = $routeParams["pid"];
+        vm.userId = $routeParams.uid;
+        vm.websiteId = $routeParams.wid;
+        vm.pageId = $routeParams.pid;
 
         function init() {
             //load pages for landscape showing list
@@ -55,9 +55,9 @@
         var vm = this;
         vm.updatePage = updatePage;
         vm.deletePage = deletePage;
-        vm.userId = $routeParams["uid"];
-        vm.websiteId = $routeParams["wid"];
-        vm.pageId = $routeParams["pid"];
+        vm.userId = $routeParams.uid;
+        vm.websiteId = $routeParams.wid;
+        vm.pageId = $routeParams.pid;
 
         function init() {
             //load pages for landscape showing list

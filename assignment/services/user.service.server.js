@@ -26,12 +26,13 @@ module.exports = function (app, model) {
             .findUserByUsername(username)
             .then(
                 function (user) {
-                    res.json(user);
-                },
-                function (err) {
-                    console.log(err);
-                    res.sendStatus(404);
-                });
+                    if (user) {
+                        res.json(user);
+                    } else {
+                        res.sendStatus(404);
+                    }
+                }
+            );
     }
 
     function findUserByCredentials(req, res) {
@@ -43,10 +44,6 @@ module.exports = function (app, model) {
             .then(
                 function (user) {
                     res.json(user);
-                },
-                function (err) {
-                    console.log(err);
-                    res.sendStatus(404);
                 }
             );
     }
@@ -59,10 +56,6 @@ module.exports = function (app, model) {
             .then(
                 function (user) {
                     res.json(user);
-                },
-                function (err) {
-                    console.log(err);
-                    res.sendStatus(404);
                 }
             );
     }
@@ -78,7 +71,6 @@ module.exports = function (app, model) {
                     res.json(user);
                 },
                 function (err) {
-                    console.log(err);
                     res.sendStatus(404);
                 }
             );
@@ -94,10 +86,9 @@ module.exports = function (app, model) {
                     res.json(newUser);
                 },
                 function (err) {
-                    console.log(err);
                     res.sendStatus(404);
                 }
-            )
+            );
     }
 
     function deleteUser(req, res) {
@@ -110,9 +101,8 @@ module.exports = function (app, model) {
                     res.sendStatus(200);
                 },
                 function (err) {
-                    console.log(err);
                     res.sendStatus(404);
                 }
-            )
+            );
     }
 };

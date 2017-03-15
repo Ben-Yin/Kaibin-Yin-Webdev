@@ -1,5 +1,12 @@
+
 <form enctype="multipart/form-data"
       class="form">
+    <div class="form-group">
+        <button ng-click="model.searchFromFlickr()"
+                class="btn btn-primary btn-block">
+            Search from Flickr
+        </button>
+    </div>
     <div class="form-group">
         <label for="width">Width</label>
         <input ng-model="model.widget.width"

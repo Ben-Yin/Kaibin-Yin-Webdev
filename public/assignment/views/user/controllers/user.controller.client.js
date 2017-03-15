@@ -56,6 +56,7 @@
                             vm.error = "Register failed, unknown error!";
                         });
                 });
+
         }
     }
 

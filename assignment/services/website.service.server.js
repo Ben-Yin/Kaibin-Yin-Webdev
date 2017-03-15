@@ -17,10 +17,6 @@ module.exports = function (app, model) {
             .then(
                 function (websites) {
                     res.json(websites);
-                },
-                function (err) {
-                    console.log(err);
-                    res.sendStatus(404);
                 }
             );
     }
@@ -29,18 +25,13 @@ module.exports = function (app, model) {
         var websiteId = req.params.websiteId;
         model
             .WebsiteModel
-            .findWidgetById(websiteId)
+            .findWebsiteById(websiteId)
             .then(
                 function (website) {
                     res.json(website)
-                },
-                function (err) {
-                    console.log(err);
-                    res.sendStatus(404);
                 }
             );
     }
-
     
     function updateWebsite(req, res) {
         var websiteId = req.params.websiteId;

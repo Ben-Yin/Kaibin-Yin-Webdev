@@ -1,5 +1,4 @@
 module.exports = function () {
-    console.log("In SERVER website.model.server.js");
     var mongoose = require("mongoose");
     mongoose.Promise = require('bluebird');
     var WebsiteSchema = require("./website.schema.server")();
@@ -7,7 +6,7 @@ module.exports = function () {
 
 
     var api = {
-        createWebsiteForUser : createWebsiteForUser,
+        createWebsite : createWebsite,
         findAllWebsitesForUser : findAllWebsitesForUser,
         findWebsiteById : findWebsiteById,
         updateWebsite : updateWebsite,
@@ -15,7 +14,7 @@ module.exports = function () {
     };
     return api;
 
-    function createWebsiteForUser(userId, website) {
+    function createWebsite(userId, website) {
         website._user = userId;
         return WebsiteModel.create(website);
     }

@@ -1,4 +1,10 @@
 module.exports = function () {
+
+    var userModel = require("./user/user.model.server")();
+    var websiteModel = require("./website/website.model.server")();
+    var pageModel = require("./page/page.model.server")();
+    var widgetModel = require("./widget/widget.model.server")();
+
     var connectionString = 'mongodb://127.0.0.1:27017/test';
 
     if(process.env.MLAB_USERNAME) {
@@ -9,13 +15,9 @@ module.exports = function () {
             process.env.MLAB_APP_NAME;
     }
 
-    var mongoose = require('mongoose');
-    mongoose.connect(connectionString);
-
-    var userModel = require("./user/user.model.server")();
-    var websiteModel = require("./website/website.model.server")();
-    var pageModel = require("./page/page.model.server")();
-    var widgetModel = require("./widget/widget.model.server")();
+    var mongoose = require("mongoose");
+    var options = { promiseLibrary: require('bluebird') };
+    mongoose.createConnection(connectionString, options);
 
     var model = {
         UserModel: userModel,
