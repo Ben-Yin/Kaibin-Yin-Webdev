@@ -6,7 +6,7 @@ module.exports = function (app, model) {
     app.get("/api/website/:websiteId/page", findAllPages);
     app.get("/api/page/:pageId", findPageById);
     app.put("/api/page/:pageId", updatePage);
-    app.delete("/api/page/:pageId", deletePage);
+    app.delete("/api/website/:websiteId/page/:pageId", deletePage);
 
     function findAllPages(req, res) {
         var websiteId = req.params.websiteId;
@@ -16,6 +16,10 @@ module.exports = function (app, model) {
             .then(
                 function (pages) {
                     res.json(pages);
+                },
+                function (err) {
+                    console.log(err);
+                    res.sendStatus(500).send(err);
                 }
             );
     }
@@ -28,6 +32,10 @@ module.exports = function (app, model) {
             .then(
                 function (page) {
                     res.json(page);
+                },
+                function (err) {
+                    console.log(err);
+                    res.sendStatus(500).send(err);
                 }
             )
     }
@@ -44,7 +52,7 @@ module.exports = function (app, model) {
                 },
                 function (err) {
                     console.log(err);
-                    res.sendStatus(404);
+                    res.sendStatus(500).send(err);
                 }
             );
     }
@@ -57,28 +65,49 @@ module.exports = function (app, model) {
             .createPage(websiteId, newPage)
             .then(
                 function (page) {
-                    res.json(page);
+                    return model
+                        .WebsiteModel
+                        .addPageForWebsite(websiteId, page);
+                }
+            )
+            .then(
+                function (status) {
+                    res.sendStatus(200);
                 },
                 function (err) {
                     console.log(err);
-                    res.sendStatus(404);
+                    res.sendStatus(500).send(err);
                 }
             );
     }
 
     function deletePage(req, res) {
         var pageId = req.params.pageId;
+        var websiteId = req.params.websiteId;
         model
             .PageModel
-            .deletePage(pageId)
+            .findPageById(pageId)
             .then(
                 function (page) {
-                    res.sendStatus(200);
-                },
-                function (err) {
-                    console.log(err);
-                    res.sendStatus(404);
+                    var promises = [];
+                    for (var i=0; i < page.widgets.length; i++) {
+                        var promise = model
+                            .WidgetModel
+                            .deleteWidget(page.widgets[i]);
+                        promises.push(promise);
+                    }
+                    promises.push(model
+                        .WebsiteModel
+                        .deletePageForWebsite(websiteId, pageId));
+                    promises.push(page.remove());
+                    return model.Promise.all(promises);
                 }
-            );
+            )
+            .then(function (status) {
+                res.sendStatus(200);
+            }, function (err) {
+                console.log(err);
+                res.sendStatus(500).send(err);
+            });
     }
 };

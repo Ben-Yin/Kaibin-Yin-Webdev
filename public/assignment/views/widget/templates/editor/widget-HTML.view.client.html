@@ -1,0 +1,21 @@
+<form class="form">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input ng-model="model.widget.name"
+               type="text"
+               class="form-control"
+               placeholder="HTML Widget Name">
+    </div>
+
+    <div class="form-group">
+        <label for="HTML">HTML</label>
+        <div ng-model="model.widget.text"
+             text-angular
+             ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],
+        ['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],
+        ['indent','outdent'],['html']]">
+        </div>
+
+    </div>
+
+</form>

@@ -10,7 +10,9 @@ module.exports = function () {
         findAllWebsitesForUser : findAllWebsitesForUser,
         findWebsiteById : findWebsiteById,
         updateWebsite : updateWebsite,
-        deleteWebsite : deleteWebsite
+        deleteWebsite : deleteWebsite,
+        addPageForWebsite : addPageForWebsite,
+        deletePageForWebsite : deletePageForWebsite
     };
     return api;
 
@@ -34,5 +36,24 @@ module.exports = function () {
 
     function deleteWebsite(websiteId) {
         return WebsiteModel.remove({_id: websiteId});
+    }
+
+    function addPageForWebsite(websiteId, page) {
+        return WebsiteModel
+            .findById(websiteId, function (err, website) {
+                if (err) return handleError(err);
+                website.pages.push(page);
+                website.save();
+            });
+    }
+
+    function deletePageForWebsite(websiteId, pageId) {
+        return WebsiteModel
+            .findById(websiteId, function (err, website) {
+                if (err) return handleError(err);
+                var index = website.pages.indexOf(pageId);
+                website.pages.splice(index, 1);
+                website.save();
+            });
     }
 }

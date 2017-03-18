@@ -9,9 +9,33 @@ module.exports = function (app, model) {
         var searchTerm = req.query.searchTerm;
         var key = process.env.FLICKR_API_KEY;
         var secret = process.env.FLICKR_API_SECRET;
+        var Flickr = require("flickrapi"),
+            flickrOptions = {
+                api_key: key,
+                secret: secret
+            };
+
+        Flickr.tokenOnly(flickrOptions, function(error, flickr) {
+            // we can now use "flickr" as our API object,
+            // but we can only call public methods and access public data
+            flickr.photos.search({
+                text : searchTerm
+            }, function(err, result) {
+                // result is Flickr's response
+                if (err) {
+                    console.log(err);
+                    res.sendStatus(500);
+                } else {
+                    res.json(result);
+                }
+            });
+        });
+
+
+        /*
         var urlBase = "https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&api_key=API_KEY&text=TEXT";
         var url = urlBase.replace("API_KEY", key).replace("TEXT", searchTerm);
-        res.send(url);
+        */
 
     }
 

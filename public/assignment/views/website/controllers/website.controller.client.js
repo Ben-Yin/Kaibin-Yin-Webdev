@@ -105,9 +105,9 @@
                 });
         }
 
-        function deleteWebsite() {
+        function deleteWebsite(website) {
             WebsiteService
-                .deleteWebsite(vm.websiteId)
+                .deleteWebsite(website._user, website._id)
                 .success(function () {
                     $location.url("/user/"+vm.userId+"/website");
                 })

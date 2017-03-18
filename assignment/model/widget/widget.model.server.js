@@ -42,10 +42,9 @@ module.exports = function () {
         return Widget
             .find({_page: pageId}, function (err, widgets) {
                 if (start < end) {
-                    moveUpWidget(pageId, widgets, start, end);
-                }
-                else if (start > end) {
-                    moveDownWidget(pageId, widgets, start, end);
+                    moveUpWidget(widgets, start, end);
+                } else if (start > end) {
+                    moveDownWidget(widgets, start, end);
                 }
             });
     }
@@ -57,54 +56,42 @@ module.exports = function () {
 
     function deleteWidget(widgetId) {
         return Widget
-            .findOne({_id: widgetId},
-                function (err, widget) {
-                    var index = widget.index;
-                    var pageId = widget._page;
-                    Widget
-                        .find({_page: pageId},
+            .findOne({_id: widgetId})
+            .then(
+                function (widget) {
+                    return Widget
+                        .find({_page: widget._page},
                             function (err, widgets) {
-                                widgets.forEach(function (widget) {
-                                    if (widget.index > index) {
-                                        widget.index--;
-                                        widget.save(function() {});
-                                    } else if (widget.index === index) {
-                                        widget.remove();
-                                    }
-                                })
+                                moveUpWidget(widgets, widget.index, widgets.length);
+                                widget.remove();
                             });
-                });
+                }
+            );
     }
 
-    function moveUpWidget(pageId, widgets, i, j) {
+    function moveUpWidget(widgets, i, j) {
         for (var w in widgets) {
-            if (widgets[w].pageId == pageId) {
-                if (widgets[w].index > i && widgets[w].index <= j) {
-                    widgets[w].index -= 1;
-                    widget.save(function() {});
-                }
-                else if (widgets[w].index == i) {
-                    widgets[w].index = parseInt(j);
-                    widget.save(function() {});
-                }
+            if (widgets[w].index > i && widgets[w].index <= j) {
+                widgets[w].index -= 1;
+                widgets[w].save();
             }
-
+            else if (widgets[w].index == i) {
+                widgets[w].index = parseInt(j);
+                widgets[w].save();
+            }
         }
     }
 
-    function moveDownWidget(pageId, widgets, i, j) {
+    function moveDownWidget(widgets, i, j) {
         for (var w in widgets) {
-            if (widgets[w].pageId == pageId) {
-                if (widgets[w].index < i && widgets[w].index >= j) {
-                    widgets[w].index += 1;
-                    widget.save(function() {});
-                }
-                else if (widgets[w].index == i) {
-                    widgets[w].index = parseInt(j);
-                    widget.save(function() {});
-                }
+            if (widgets[w].index < i && widgets[w].index >= j) {
+                widgets[w].index += 1;
+                widgets[w].save();
             }
-
+            else if (widgets[w].index == i) {
+                widgets[w].index = parseInt(j);
+                widgets[w].save();
+            }
         }
     }
 };

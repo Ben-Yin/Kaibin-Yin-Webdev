@@ -3,7 +3,7 @@ module.exports = function () {
     var WebsiteSchema = mongoose.Schema({
         _user: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
+            ref: 'assignment.user'
         },
         name: {
             type: String,
@@ -12,7 +12,7 @@ module.exports = function () {
         description: String,
         pages: [{
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Page'
+            ref: 'assignment.page'
         }],
         dateCreated: {
             type: Date,

@@ -5,7 +5,7 @@ module.exports = function () {
     var pageModel = require("./page/page.model.server")();
     var widgetModel = require("./widget/widget.model.server")();
 
-    var connectionString = 'mongodb://127.0.0.1:27017/test';
+    var connectionString = 'mongodb://127.0.0.1:27017/webdev';
 
     if(process.env.MLAB_USERNAME) {
         connectionString = process.env.MLAB_USERNAME + ":" +
@@ -16,14 +16,17 @@ module.exports = function () {
     }
 
     var mongoose = require("mongoose");
+    var Promise = require('bluebird');
+
     var options = { promiseLibrary: require('bluebird') };
     mongoose.createConnection(connectionString, options);
 
     var model = {
         UserModel: userModel,
         WebsiteModel: websiteModel,
-        PageModel : pageModel,
-        WidgetModel : widgetModel
+        PageModel: pageModel,
+        WidgetModel: widgetModel,
+        Promise: Promise
     };
     return model;
 };

@@ -7,7 +7,7 @@ module.exports = function () {
         lastName: String,
         email: String,
         phone:String,
-        websites: [{type: mongoose.Schema.Types.ObjectId, ref: 'Website'}],
+        websites: [{type: mongoose.Schema.Types.ObjectId, ref: 'assignment.website'}],
         dateCreates: {type: Date, default: Date.now()}
     }, {collection: "assignment.user"});
 

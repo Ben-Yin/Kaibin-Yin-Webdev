@@ -15,7 +15,14 @@
 </nav>
 
 <div class="container-fluid">
-
+    <div ng-switch="model.message.type">
+        <div class="alert alert-danger" ng-switch-when="ERROR">
+            {{model.message.content}}
+        </div>
+        <div class="alert alert-success" ng-switch-when="SUCCESS">
+            {{model.message.content}}
+        </div>
+    </div>
     <div class="input-group">
         <input ng-model="searchText" type="text" class="form-control">
         <span class="input-group-btn">

@@ -8,7 +8,6 @@ module.exports = function (app, model) {
     app.put("/api/user/:userId", updateUser);
     app.delete("/api/user/:userId", deleteUser);
 
-
     function findUser(req, res) {
         var username = req.query.username;
         var password = req.query.password;
@@ -29,7 +28,7 @@ module.exports = function (app, model) {
                     if (user) {
                         res.json(user);
                     } else {
-                        res.sendStatus(404);
+                        res.sendStatus(500);
                     }
                 }
             );
@@ -44,6 +43,10 @@ module.exports = function (app, model) {
             .then(
                 function (user) {
                     res.json(user);
+                },
+                function (err) {
+                    console.log(err);
+                    res.sendStatus(500).send(err);
                 }
             );
     }
@@ -56,6 +59,10 @@ module.exports = function (app, model) {
             .then(
                 function (user) {
                     res.json(user);
+                },
+                function (err) {
+                    console.log(err);
+                    res.sendStatus(500).send(err);
                 }
             );
     }
@@ -71,7 +78,7 @@ module.exports = function (app, model) {
                     res.json(user);
                 },
                 function (err) {
-                    res.sendStatus(404);
+                    res.sendStatus(500).send(err);
                 }
             );
     }
@@ -86,7 +93,7 @@ module.exports = function (app, model) {
                     res.json(newUser);
                 },
                 function (err) {
-                    res.sendStatus(404);
+                    res.sendStatus(500).send(err);
                 }
             );
     }
@@ -95,14 +102,25 @@ module.exports = function (app, model) {
         var userId = req.params.userId;
         model
             .UserModel
-            .deleteUser(userId)
+            .findUserById(userId)
             .then(
                 function (user) {
-                    res.sendStatus(200);
-                },
-                function (err) {
-                    res.sendStatus(404);
+                    var promises = [];
+                    for (var i= 0; i < user.websites.length; i++) {
+                        var promise = model
+                            .WebsiteModel
+                            .deleteWebsite(user.websites[i]);
+                        promises.push(promise);
+                    }
+                    promises.push(user.remove());
+                    return model.Promise.all(promises);
                 }
-            );
+            )
+            .then(function (status) {
+                res.sendStatus(200);
+            }, function (err) {
+                console.log(err);
+                res.sendStatus(500).send(err);
+            })
     }
 };

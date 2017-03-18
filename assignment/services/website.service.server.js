@@ -6,8 +6,7 @@ module.exports = function (app, model) {
     app.get("/api/user/:userId/website", findAllWebsites);
     app.get("/api/website/:websiteId", findWebsiteById);
     app.put("/api/website/:websiteId", updateWebsite);
-    app.delete("/api/website/:websiteId", deleteWebsite);
-
+    app.delete("/api/user/:userId/website/:websiteId", deleteWebsite);
 
     function findAllWebsites(req, res) {
         var userId = req.params.userId;
@@ -17,6 +16,10 @@ module.exports = function (app, model) {
             .then(
                 function (websites) {
                     res.json(websites);
+                },
+                function (err) {
+                    console.log(err);
+                    res.sendStatus(500).send(err);
                 }
             );
     }
@@ -29,6 +32,10 @@ module.exports = function (app, model) {
             .then(
                 function (website) {
                     res.json(website)
+                },
+                function (err) {
+                    console.log(err);
+                    res.sendStatus(500).send(err);
                 }
             );
     }
@@ -45,7 +52,7 @@ module.exports = function (app, model) {
                 },
                 function (err) {
                     console.log(err);
-                    res.sendStatus(404);
+                    res.sendStatus(500).send(err);
                 }
             );
     }
@@ -58,28 +65,50 @@ module.exports = function (app, model) {
             .createWebsite(userId, newWebsite)
             .then(
                 function (website) {
-                    res.json(website);
+                    return model
+                        .UserModel
+                        .addWebsiteForUser(userId, website);
+                }
+            )
+            .then(
+                function (status) {
+                    res.sendStatus(200);
                 },
                 function (err) {
                     console.log(err);
-                    res.sendStatus(404);
+                    res.sendStatus(500).send(err);
                 }
             );
     }
 
     function deleteWebsite(req, res) {
+        var userId = req.params.userId;
         var websiteId = req.params.websiteId;
         model
             .WebsiteModel
-            .deleteWebsite(websiteId)
+            .findWebsiteById(websiteId)
             .then(
                 function (website) {
-                    res.sendStatus(200);
-                },
-                function (err) {
-                    console.log(err);
-                    res.sendStatus(404);
+                    var promises = [];
+                    for (var i=0; i < website.pages.length; i++) {
+                        var promise = model
+                            .PageModel
+                            .deletePage(website.pages[i]);
+                        promises.push(promise);
+                    }
+                    promises.push(model
+                        .UserModel
+                        .deleteWebsiteForUser(userId, websiteId));
+                    promises.push(website.remove());
+                    return model.Promise.all(promises);
                 }
             )
+            .then(function (status) {
+                res.sendStatus(200);
+            }, function (err) {
+                console.log(err);
+                res.sendStatus(500).send(err);
+            });
     }
+
 };

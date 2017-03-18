@@ -8,18 +8,18 @@
     
     function FlickrService($http) {
         var api = {
-            "getSearchUrl" : getSearchUrl,
+            // "getSearchUrl" : getSearchUrl,
             "searchPhotos" : searchPhotos
         };
 
         return api;
-
+/*
         function getSearchUrl(searchTerm) {
             return $http.get("/api/search-flickr?searchTerm="+searchTerm);
         }
-
-        function searchPhotos(url) {
-            return $http.get(url);
+*/
+        function searchPhotos(searchTerm) {
+            return $http.get("/api/search-flickr?searchTerm="+searchTerm);
         }
     }
 })();

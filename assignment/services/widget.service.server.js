@@ -9,7 +9,7 @@ module.exports = function (app, model) {
     app.get("/api/page/:pageId/widget", findAllWidgets);
     app.get("/api/widget/:widgetId", findWidgetById);
     app.put("/api/widget/:widgetId", updateWidget);
-    app.delete("/api/widget/:widgetId", deleteWidget);
+    app.delete("/api/page/:pageId/widget/:widgetId", deleteWidget);
     app.post("/api/upload", upload.single('image-upload-file'), uploadImage);
     app.put("/api/page/:pageId/widget", sortWidget);
     app.get("/api/sign-s3", signS3);
@@ -23,6 +23,10 @@ module.exports = function (app, model) {
             .then(
                 function (widgets) {
                     res.json(widgets);
+                },
+                function (err) {
+                    console.log(err);
+                    res.sendStatus(500).send(err);
                 }
             );
 
@@ -36,6 +40,10 @@ module.exports = function (app, model) {
             .then(
                 function (widget) {
                     res.json(widget);
+                },
+                function (err) {
+                    console.log(err);
+                    res.sendStatus(500).send(err);
                 }
             );
     }
@@ -52,7 +60,7 @@ module.exports = function (app, model) {
                 },
                 function (err) {
                     console.log(err);
-                    res.sendStatus(404);
+                    res.sendStatus(500).send(err);
                 }
             );
     }
@@ -65,27 +73,46 @@ module.exports = function (app, model) {
             .createWidget(pageId, newWidget)
             .then(
                 function (widget) {
-                    res.json(widget);
+                    newWidget = widget;
+                    return model
+                        .PageModel
+                        .addWidgetForPage(pageId, widget);
+                }
+            )
+            .then(
+                function (status) {
+                    res.json(newWidget);
                 },
                 function (err) {
                     console.log(err);
-                    res.sendStatus(404);
+                    res.sendStatus(500).send(err);
                 }
             );
     }
 
     function deleteWidget(req, res) {
+        var pageId = req.params.pageId;
         var widgetId = req.params.widgetId;
         model
-            .WidgetModel
-            .deleteWidget(widgetId)
+            .Promise
+            .join(
+                model
+                    .PageModel
+                    .deleteWidgetForPage(pageId, widgetId),
+                model
+                    .WidgetModel
+                    .deleteWidget(widgetId),
+                function (page, widget) {
+                    // console.log(page,widget);
+                }
+            )
             .then(
                 function () {
                     res.sendStatus(200);
                 },
                 function (err) {
                     console.log(err);
-                    res.sendStatus(404);
+                    res.sendStatus(500).send(err);
                 }
             );
     }
@@ -103,7 +130,7 @@ module.exports = function (app, model) {
                 },
                 function (err) {
                     console.log(err);
-                    res.sendStatus(404);
+                    res.sendStatus(500).send(err);
                 }
             );
     }
