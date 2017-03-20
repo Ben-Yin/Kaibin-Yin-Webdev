@@ -51,6 +51,15 @@ body {
     height: 100%;
 }
 
+.ta-editor {
+    min-height: 300px;
+    height: auto;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 100%;
+    margin: 20px 0;
+}
+
 @media screen and (min-width: 768px) {
     .pull-right {
         position: absolute;

@@ -13,7 +13,7 @@
         </div>
         <div ng-switch="widget.widgetType">
             <div ng-switch-when="HTML">
-                <div ng-bind-html="model.getTrustHTML(widget.text)"></div>
+                <div ta-bind ng-model="widget.text"></div>
             </div>
             <div ng-switch-when="HEADING">
                 <ng-include src="'views/widget/templates/list/widget-list-HEADING.view.client.html'"></ng-include>
