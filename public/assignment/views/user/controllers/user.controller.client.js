@@ -8,8 +8,14 @@
     function LoginController($location, $window, UserService) {
         var vm = this;
         vm.login = login;
+        vm.changeShowPassword = changeShowPassword;
 
         function init() {
+            vm.passwordInput = {
+                "show"       : false,
+                "type"      : "password",
+                "glyphicons" : "glyphicon glyphicon-eye-open"
+            }
         }
 
         init();
@@ -24,6 +30,22 @@
                         vm.error = "Incorrect username or password!";
                     }
                 });
+        }
+
+        function changeShowPassword() {
+            if (vm.passwordInput.show) {
+                vm.passwordInput = {
+                    "show"       : false,
+                    "type"      : "password",
+                    "glyphicons" : "glyphicon glyphicon-eye-open"
+                }
+            } else {
+                vm.passwordInput = {
+                    "show"       : true,
+                    "type"      : "text",
+                    "glyphicons" : "glyphicon glyphicon-eye-close"
+                }
+            }
         }
     }
 

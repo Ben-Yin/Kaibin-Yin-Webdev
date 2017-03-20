@@ -8,6 +8,8 @@ module.exports = function (app, model) {
     app.put("/api/user/:userId", updateUser);
     app.delete("/api/user/:userId", deleteUser);
 
+    var md5 = require('md5');
+
     function findUser(req, res) {
         var username = req.query.username;
         var password = req.query.password;
@@ -36,7 +38,7 @@ module.exports = function (app, model) {
 
     function findUserByCredentials(req, res) {
         var username = req.query.username;
-        var password = req.query.password;
+        var password = md5(req.query.password);
         model
             .UserModel
             .findUserByCredential(username, password)
@@ -70,6 +72,7 @@ module.exports = function (app, model) {
     function updateUser(req, res) {
         var userId = req.params.userId;
         var newUser = req.body;
+        console.log(newUser);
         model
             .UserModel
             .updateUser(userId, newUser)
@@ -85,6 +88,7 @@ module.exports = function (app, model) {
 
     function createUser(req, res) {
         var user = req.body;
+        user.password = md5(user.password);
         model
             .UserModel
             .createUser(user)

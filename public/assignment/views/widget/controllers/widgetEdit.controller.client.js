@@ -36,6 +36,9 @@
         init();
 
         function updateWidget(widget) {
+            if (widget.widgetType == "TEXT" && widget.formatted == null) {
+                widget.formatted = false;
+            }
             WidgetService.updateWidget(vm.widgetId, widget)
                 .success(function (status) {
                     vm.message = {

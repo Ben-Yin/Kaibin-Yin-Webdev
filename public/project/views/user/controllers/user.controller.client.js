@@ -98,9 +98,8 @@
         init();
 
         function updateProfile(user) {
-            var newUser = UserService.updateUser(vm.userId, user);
-            console.log(newUser);
-            if (newUser) {
+            var promise = UserService.updateUser(vm.userId, user);
+            if (promise) {
                 vm.message = {type: "SUCCESS", content:"Profile updated!"};
                 init();
             } else {

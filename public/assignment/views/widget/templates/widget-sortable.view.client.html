@@ -11,20 +11,6 @@
                 </button>
             </div>
         </div>
-        <div ng-switch="widget.widgetType">
-            <div ng-switch-when="HTML">
-                <div ta-bind ng-model="widget.text"></div>
-            </div>
-            <div ng-switch-when="HEADING">
-                <ng-include src="'views/widget/templates/list/widget-list-HEADING.view.client.html'"></ng-include>
-            </div>
-            <div ng-switch-when="IMAGE">
-                <ng-include src="'views/widget/templates/list/widget-list-IMAGE.view.client.html'"></ng-include>
-            </div>
-            <div ng-switch-when="YOUTUBE"
-                 class="youtube-widget">
-                <ng-include src="'views/widget/templates/list/widget-list-YOUTUBE.view.client.html'"></ng-include>
-            </div>
-        </div>
+        <ng-include src="model.getWidgetTemplateUrl(widget.widgetType)"></ng-include>
     </div>
 </div>

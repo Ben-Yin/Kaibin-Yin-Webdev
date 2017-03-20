@@ -7,10 +7,17 @@
            class="form-control"
            type="text"
            placeholder="Username"/>
-    <input ng-model="model.user.password"
-           class="form-control"
-           type="password"
-           placeholder="Password"/>
+    <div class="row">
+        <div class="col-xs-11">
+            <input ng-model="model.user.password"
+                   class="form-control"
+                   type="{{model.passwordInput.type}}"
+                   placeholder="Password"/>
+        </div>
+        <div class="col-xs-1">
+            <span ng-class="model.passwordInput.glyphicons" ng-click="model.changeShowPassword()"></span>
+        </div>
+    </div>
     <a class="btn btn-primary btn-block"
        ng-click="model.login(model.user)">Login</a>
     <a class="btn btn-success btn-block"
