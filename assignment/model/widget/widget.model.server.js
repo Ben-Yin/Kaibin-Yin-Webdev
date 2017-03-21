@@ -25,7 +25,7 @@ module.exports = function () {
             .then(function (widgets) {
                 // starts with 0 and ....
                 widget.index = widgets.length;
-                return Widget.create(widget);
+                return WidgetModel.create(widget);
             });
     }
 
@@ -40,7 +40,7 @@ module.exports = function () {
     function reorderWidget(pageId, start, end) {
         var start = parseInt(start);
         var end = parseInt(end);
-        return Widget
+        return WidgetModel
             .find({_page: pageId}, function (err, widgets) {
                 if (start < end) {
                     moveUpWidget(widgets, start, end);
