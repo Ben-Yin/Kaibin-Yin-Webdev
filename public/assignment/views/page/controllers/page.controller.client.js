@@ -89,7 +89,6 @@
                         "type"    : "SUCCESS",
                         "content" : "Page updated!"
                     };
-                    vm.page = newPage;
                     PageService
                         .findPageByWebsiteId(vm.websiteId)
                         .success(function (pages) {

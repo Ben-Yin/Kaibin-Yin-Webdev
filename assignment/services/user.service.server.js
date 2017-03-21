@@ -109,15 +109,16 @@ module.exports = function (app, model) {
             .findUserById(userId)
             .then(
                 function (user) {
-                    var promises = [];
-                    for (var i= 0; i < user.websites.length; i++) {
-                        var promise = model
-                            .WebsiteModel
-                            .deleteWebsite(user.websites[i]);
-                        promises.push(promise);
-                    }
-                    promises.push(user.remove());
-                    return model.Promise.all(promises);
+                    return model
+                        .Promise
+                        .join(
+                            model
+                                .WebsiteModel
+                                .deleteWebsites(user.websites),
+                            user.remove(),
+                            function () {
+                            }
+                        );
                 }
             )
             .then(function (status) {

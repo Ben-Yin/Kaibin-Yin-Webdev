@@ -89,18 +89,16 @@ module.exports = function (app, model) {
             .findPageById(pageId)
             .then(
                 function (page) {
-                    var promises = [];
-                    for (var i=0; i < page.widgets.length; i++) {
-                        var promise = model
-                            .WidgetModel
-                            .deleteWidget(page.widgets[i]);
-                        promises.push(promise);
-                    }
-                    promises.push(model
-                        .WebsiteModel
-                        .deletePageForWebsite(websiteId, pageId));
-                    promises.push(page.remove());
-                    return model.Promise.all(promises);
+                    return model
+                        .Promise
+                        .join(
+                            model
+                                .WidgetModel
+                                .deleteWidgets(page.widgets),
+                            page.remove(),
+                            function () {
+                            }
+                        );
                 }
             )
             .then(function (status) {

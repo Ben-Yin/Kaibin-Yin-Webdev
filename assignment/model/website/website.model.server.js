@@ -11,6 +11,7 @@ module.exports = function () {
         findWebsiteById : findWebsiteById,
         updateWebsite : updateWebsite,
         deleteWebsite : deleteWebsite,
+        deleteWebsites : deleteWebsites,
         addPageForWebsite : addPageForWebsite,
         deletePageForWebsite : deletePageForWebsite
     };
@@ -36,6 +37,11 @@ module.exports = function () {
 
     function deleteWebsite(websiteId) {
         return WebsiteModel.remove({_id: websiteId});
+    }
+
+    function deleteWebsites(websiteIds) {
+        return WebsiteModel
+            .remove({_id:{$in:websiteIds}});
     }
 
     function addPageForWebsite(websiteId, page) {

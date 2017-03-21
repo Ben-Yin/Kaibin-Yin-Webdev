@@ -9,6 +9,7 @@ module.exports = function () {
         findPageById: findPageById,
         updatePage: updatePage,
         deletePage: deletePage,
+        deletePages: deletePages,
         addWidgetForPage: addWidgetForPage,
         deleteWidgetForPage: deleteWidgetForPage
     };
@@ -40,6 +41,11 @@ module.exports = function () {
             .remove({_id: pageId});
     }
 
+    function deletePages(pageIds) {
+        return PageModel
+            .remove({_id:{$in:pageIds}});
+    }
+
     function addWidgetForPage(pageId, widget) {
         return PageModel
             .findById(pageId, function (err, page) {
@@ -58,4 +64,5 @@ module.exports = function () {
                 page.save();
             });
     }
+
 };

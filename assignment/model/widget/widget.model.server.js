@@ -3,7 +3,7 @@ module.exports = function () {
     var mongoose = require('mongoose');
     mongoose.Promise = require('bluebird');
     var WidgetSchema = require('./widget.schema.server')();
-    var Widget = mongoose.model('WidgetModel', WidgetSchema);
+    var WidgetModel = mongoose.model('WidgetModel', WidgetSchema);
 
     var api = {
         createWidget: createWidget,
@@ -11,7 +11,8 @@ module.exports = function () {
         findWidgetById: findWidgetById,
         reorderWidget: reorderWidget,
         updateWidget: updateWidget,
-        deleteWidget: deleteWidget
+        deleteWidget: deleteWidget,
+        deleteWidgets: deleteWidgets
     };
     return api;
 
@@ -19,7 +20,7 @@ module.exports = function () {
         widget._page = pageId;
         widget.size = 1;
         widget.width = "100%";
-        return Widget
+        return WidgetModel
             .find({_page: pageId})
             .then(function (widgets) {
                 // starts with 0 and ....
@@ -29,11 +30,11 @@ module.exports = function () {
     }
 
     function findAllWidgetsForPage(pageId) {
-        return Widget.find({_page: pageId});
+        return WidgetModel.find({_page: pageId});
     }
 
     function findWidgetById(widgetId) {
-        return Widget.findById(widgetId);
+        return WidgetModel.findById(widgetId);
     }
 
     function reorderWidget(pageId, start, end) {
@@ -51,15 +52,15 @@ module.exports = function () {
 
     function updateWidget(widgetId, widget) {
         delete widget._id;
-        return Widget.update({_id: widgetId}, {$set: widget});
+        return WidgetModel.update({_id: widgetId}, {$set: widget});
     }
 
     function deleteWidget(widgetId) {
-        return Widget
+        return WidgetModel
             .findOne({_id: widgetId})
             .then(
                 function (widget) {
-                    return Widget
+                    return WidgetModel
                         .find({_page: widget._page},
                             function (err, widgets) {
                                 moveUpWidget(widgets, widget.index, widgets.length);
@@ -67,6 +68,11 @@ module.exports = function () {
                             });
                 }
             );
+    }
+
+    function deleteWidgets(widgetIds) {
+        return WidgetModel
+            .remove({_id:{$in:widgetIds}});
     }
 
     function moveUpWidget(widgets, i, j) {

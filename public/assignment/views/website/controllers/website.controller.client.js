@@ -89,7 +89,6 @@
                         "type"    : "SUCCESS",
                         "content" : "Website updated!"
                     };
-                    vm.website = newWebsite;
                     WebsiteService
                         .findWebsitesByUser(vm.userId)
                         .success(function (websites) {
