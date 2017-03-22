@@ -176,7 +176,6 @@ module.exports = function (app, model) {
             ContentType: fileType,
             ACL: 'public-read'
         };
-
         s3.getSignedUrl('putObject', s3Params, function(err, data) {
             if(err){
                 console.log(err);

@@ -10,7 +10,7 @@
             "updateWidget": updateWidget,
             "deleteWidget": deleteWidget,
             "sortWidget": sortWidget,
-            "getSignedRequest": getSignedRequest,
+            "getSignedRequest": getSignedRequest
         };
 
         return api;
@@ -50,33 +50,31 @@
                     }
                     else {
                         alert('Could not get signed URL.');
-                        return $http.get("");
                     }
                 }
             };
             xhr.send();
+            return $http.get("");
         }
 
         function uploadFile(widget, file, signedRequest, url) {
             const xhr = new XMLHttpRequest();
+            var status = 0;
             xhr.open('PUT', signedRequest);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
+                    if (xhr.status == 200) {
+                        status = xhr.status;
                         widget.url = url;
                         widget.fileName = file.name;
+                        updateWidget(widget._id, widget);
                     }
                     else {
                         alert('Could not upload file.');
                     }
                 }
             };
-            xhr.send(file);
-            if (xhr.status == 200) {
-                return updateWidget(widget._id, widget);
-            } else {
-                return $http.get("");
-            }
+            return xhr.send(file);
         }
     }
 })();

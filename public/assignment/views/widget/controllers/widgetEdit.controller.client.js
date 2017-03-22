@@ -81,9 +81,8 @@
                 return alert('No file selected.');
             }
             WidgetService
-                .getSignedRequest(file)
+                .getSignedRequest(vm.widget, file)
                 .success(function (newWidget) {
-                    vm.widget = newWidget;
                     vm.message = {
                         "type": "SUCCESS",
                         "content": "Image Uploaded successful!"
