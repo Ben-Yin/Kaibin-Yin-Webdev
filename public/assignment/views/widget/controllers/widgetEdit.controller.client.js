@@ -13,12 +13,14 @@
         vm.getWidgetTemplateUrl = getWidgetTemplateUrl;
         vm.requestUploadFile = requestUploadFile;
         vm.searchFromFlickr = searchFromFlickr;
+        vm.setFormatted = setFormatted;
         vm.userId = $routeParams.uid;
         vm.websiteId = $routeParams.wid;
         vm.pageId = $routeParams.pid;
         vm.widgetId = $routeParams.wgid;
 
         function init() {
+            vm.formatted_but = "btn btn-default";
             WidgetService
                 .findWidgetById(vm.widgetId)
                 .success(function (widget) {
@@ -92,6 +94,16 @@
 
         function searchFromFlickr() {
             $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/" + vm.widgetId + "/flickr");
+        }
+        
+        function setFormatted() {
+            if (vm.widget.formatted) {
+                vm.formatted_but = "btn btn-default";
+                vm.widget.formatted = false;
+            } else {
+                vm.formatted_but = "btn btn-default active";
+                vm.widget.formatted = true;
+            }
         }
     }
 })();
