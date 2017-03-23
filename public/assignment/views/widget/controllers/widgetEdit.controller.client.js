@@ -25,6 +25,13 @@
                 .success(function (widget) {
                     vm.widget = widget;
                     vm.uploadFile = null;
+                    if (vm.widget.widgetType == "TEXT") {
+                        if (vm.widget.formatted) {
+                            vm.formatted_btn = "btn btn-primary active";
+                        } else {
+                            vm.formatted_btn = "btn btn-default";
+                        }
+                    }
                 })
                 .error(function () {
                     vm.message = {
@@ -32,11 +39,7 @@
                         "content": "Load widget information failed!"
                     };
                 });
-            if (vm.widget.formatted) {
-                vm.formatted_btn = "btn btn-primary active";
-            } else {
-                vm.formatted_btn = "btn btn-default";
-            }
+
         }
 
         init();
