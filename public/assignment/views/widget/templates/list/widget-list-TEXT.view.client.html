@@ -1,8 +1,17 @@
 <div class="container-fluid">
-    <div ng-if="widget.formatted" text-angular ta-toolbar="[['h1','h2','h3'],['bold','italics'],['ul','ol']]"></div>
+    <div ng-if="widget.formatted"
+         text-angular
+         ta-toolbar="[['h1','h2','h3'],['bold','italics'],['ul','ol']]"
+         ng-model="widget.text"
+         placeholder="{{widget.placeholder}}"
+    ></div>
     <input ng-if="!widget.formatted && (!widget.rows || widget.rows===1)"
-           placeholder="{{widget.textInput.placeholder}}" class="form-control"/>
+           placeholder="{{widget.placeholder}}"
+           ng-model="widget.text"
+           class="form-control"/>
     <textarea ng-if="!widget.formatted && (widget.rows > 1)"
-              rows="{{widget.rows}}" placeholder="{{widget.placeholder}}"
+              rows="{{widget.rows}}"
+              ng-model="widget.text"
+              placeholder="{{widget.placeholder}}"
               class="form-control">{{widget.text}}</textarea>
 </div>

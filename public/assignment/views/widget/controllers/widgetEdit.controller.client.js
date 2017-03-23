@@ -20,7 +20,6 @@
         vm.widgetId = $routeParams.wgid;
 
         function init() {
-            vm.formatted_but = "btn btn-default";
             WidgetService
                 .findWidgetById(vm.widgetId)
                 .success(function (widget) {
@@ -33,6 +32,11 @@
                         "content": "Load widget information failed!"
                     };
                 });
+            if (vm.widget.formatted) {
+                vm.formatted_btn = "btn btn-primary active";
+            } else {
+                vm.formatted_btn = "btn btn-default";
+            }
         }
 
         init();
@@ -98,10 +102,10 @@
         
         function setFormatted() {
             if (vm.widget.formatted) {
-                vm.formatted_but = "btn btn-default";
+                vm.formatted_btn = "btn btn-default";
                 vm.widget.formatted = false;
             } else {
-                vm.formatted_but = "btn btn-default active";
+                vm.formatted_btn = "btn btn-primary active";
                 vm.widget.formatted = true;
             }
         }
