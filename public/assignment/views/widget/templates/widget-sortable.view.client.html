@@ -1,5 +1,6 @@
 <div class="container-fluid sortable-widgets">
     <div ng-repeat="widget in model.widgets | orderBy:'index'">
+        <ng-include src="model.getWidgetTemplateUrl(widget.widgetType)"></ng-include>
         <div class="toolbar-right">
             <div class="btn-group btn-group-xs" role="group" aria-label="...">
                 <button type="button" class="btn btn-default">
@@ -11,6 +12,5 @@
                 </button>
             </div>
         </div>
-        <ng-include src="model.getWidgetTemplateUrl(widget.widgetType)"></ng-include>
     </div>
 </div>

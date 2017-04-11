@@ -1,32 +1,297 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Web Dev Course Home Page</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Kaibin Yin - Home Page</title>
+
+    <!--import from CDN: jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <!--import from CDN: angularJS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
+
+    <!-- Bootstrap Core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link href="css/landing-page.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/baraja.css" rel="stylesheet">
+    <link href="css/jquery.bxslider.css" rel="stylesheet">
+    <link href="css/jquery.vegas.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
+    <link href="css/gray.css" id="scheme-source" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Bangers' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:300,700,400' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:600,400,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </head>
+
 <body>
-    <h1>Web Dev Course Home Page</h1>
 
-    <p>
-        Customize this home page to your linking.
-    </p>
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+    <div class="container topnav">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand topnav" href="#">Kaibin Yin - Home Page</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#about">About</a>
+                </li>
+                <li>
+                    <a href="#project">Project</a>
+                </li>
+                <li>
+                    <a href="#profile">Profile</a>
+                </li>
+                <li>
+                    <a href="https://www.dropbox.com/s/m8tozmex5hikdd4/Kaibin%20Yin-Software%20Engineer%20Intern.pdf?dl=0">Resume</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
 
-    <h2>Required links</h2>
-    <ul>
-        <li>
-            <a href="project/index.html">Project</a>
-        </li>
-        <li>
-            <a href="assignment/index.html">Assignment</a>
-        </li>
-        <li>
-            <a href="test/index.html">Test MongoDB</a>
-        </li>
-        <li>
-            <a href="https://github.com/Ben-Yin/Kaibin-Yin-Webdev">Your public repository at GitHub.com</a>
-        </li>
-    </ul>
+
+<!-- Header -->
+<a name="about"></a>
+<div class="intro-header">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="intro-message">
+                    <h1>Kaibin Yin</h1>
+                    <h3>M.S. of Computer Science in Northeastern University</h3>
+                    <hr class="intro-divider">
+                    <ul class="list-inline intro-social-buttons">
+                        <li>
+                            <a href="https://www.facebook.com/profile.php?id=100010716438606" class="btn btn-default btn-lg"><i class="fa fa-facebook fa-fw"></i> <span class="network-name">Facebook</span></a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/Ben-Yin" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                        </li>
+                        <li>
+                            <a href="https://www.linkedin.com/in/kaibin-yin-neu" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">Linkedin</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+</div>
+<!-- /.intro-header -->
+
+<!-- Page Content -->
+
+<div class="content-section-a"  id="about">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 col-sm-6">
+                <hr class="section-heading-spacer">
+                <div class="clearfix"></div>
+                <h2 class="section-heading">About</h2>
+                <p class="lead">I am Kaibin Yin. I came from China and I am studying Computer Science as M.S. student in Northeastern University.
+                    Being a full-stack engineer will be my goal in my future career, thus I have gained some experience in Web development.
+
+                </p>
+                <p class="lead">My last internship in China was to maintain websites using JaveEE and PHP. Further, I mastered MEAN-stack including
+                    Node.js, MongoDB and AngularJS during the CS5610 courses in NEU, with designing a <a href="spartan-sports.herokuapp.com">fitness website</a>
+                    as final project.
+                </p>
+            </div>
+            <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                <img class="img-responsive" src="img/NE_GH_6.jpg" alt="">
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+</div>
+<!-- /.content-section-a -->
+
+<div class="content-section-b" id="project">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+                <hr class="section-heading-spacer">
+                <div class="clearfix"></div>
+                <h2 class="section-heading">Final Project<br>Spartan Fitness</h2>
+                <p class="lead"><a href="https://spartan-sports.herokuapp.com">Spartan Fitness</a> is a social media website for people
+                    to learn, to share and to enjoy their daily fitness. Users can post
+                    their fitness photo to public, write blog about fitness and sports.
+                    And there will be professional fitness instructors on Spartan to
+                    provide courses to users. Source code on <a href="https://github.com/Ben-Yin/Spartan">GitHub</a>
+                </p>
+            </div>
+            <div class="col-lg-5 col-sm-pull-6  col-sm-6">
+                <img class="img-responsive" src="img/logo_light.png" alt="">
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+</div>
+<!-- /.content-section-b -->
+<section id="section-services" class="feature-wrap" >
+    <div class="container services" id="profile">
+        <div class="row">
+
+            <div class="col-md-10 col-md-offset-1 center section-title">
+                <h3>Profile</h3>
+            </div>
+
+            <!-- Single Service Starts -->
+            <div class="col-md-6 col-sm-6 service">
+                <span class="service-icon center"><i class="fa fa-graduation-cap fa-3x"></i></span>
+                <div class="service-desc">
+                    <h4 class="service-title color-scheme">Education</h4>
+                    <h4 class="service-description justify">
+                        Northeastern University, Boston, MA
+                    </h4>
+                    <p class="service-description justify">
+                        College of Computer and Information Science
+                        <br>
+                        Master of Science in Computer Science
+                        <br>
+                        GPA: 4.0
+                        <br>
+                        Graduate: May. 2018
+                    </p>
+                    <ul style="list-style:circle">
+                        <li>Courses</li>
+                        <li><span class="gray fa fa-dot-circle-o"></span> &nbsp; Program Design Paradigms 4.0</li>
+                        <li><span class="gray fa fa-dot-circle-o"></span> &nbsp; Foundamentals of Computer Networking 4.0</li>
+                    </ul>
+                    <br>
+                    <h4 class="service-description justify">
+                        Jinan University
+                        <br>
+                        Guangzhou, China
+                    </h4>
+                    <p class="service-description justify">
+                        Bachelor of Engineering in Computer Science
+                        <br>
+                        GPA: 3.5
+                        Sep. 2012 to June. 2016<br>
+                    </p>
+                </div>
+            </div>
+            <!-- Single Service Ends -->
+
+
+            <!-- Single Service Starts -->
+            <div class="col-md-6 col-sm-6 service">
+                <span class="service-icon center"><i class="fa fa-star fa-3x"></i></span>
+                <div class="service-desc">
+                    <h4 class="service-title color-scheme">Experience</h4>
+                    <h4 class="service-description justify">
+                        Facebook Inc.
+                        <br>
+                        Menlo Park, CA
+                    </h4>
+                    <p class="service-description justify">
+                        Software Development Intern, Instagram Ads
+                        <br>
+                        May. 2017 - Aug. 2017
+                    </p>
+                    <br>
+                    <h4 class="service-description justify">
+                        MatchVS
+                        <br>
+                        Shenzhen, China
+                    </h4>
+                    <p class="service-description justify">
+                        Software Engineering Intern
+                        <br>
+                        Jan. 2016 – Feb. 2016
+                    </p>
+                    <br>
+                    <h4 class="service-description justify">
+                        NeuSoft
+                        <br>
+                        Guangzhou, China
+                    </h4>
+                    <p class="service-description justify">
+                        Software Engineering Intern
+                        <br>
+                        June. 2015 – Jul, 2015
+                    </p>
+                </div>
+            </div>
+            <!-- Single Service Ends -->
+        </div>
+    </div>
+</section>
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="list-inline">
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li class="footer-menu-divider">&sdot;</li>
+                    <li>
+                        <a href="#about">About</a>
+                    </li>
+                    <li class="footer-menu-divider">&sdot;</li>
+                    <li>
+                        <a href="#project">Project</a>
+                    </li>
+                    <li class="footer-menu-divider">&sdot;</li>
+                    <li>
+                        <a href="#profile">Profile</a>
+                    </li>
+                </ul>
+                <p class="copyright text-muted small">Copyright &copy; Kaibin Yin 2017. All Rights Reserved</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
 </body>
+
 </html>
