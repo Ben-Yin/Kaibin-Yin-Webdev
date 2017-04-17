@@ -5,19 +5,19 @@ Website: http://themegret.com
 
 ============================== */
 
-/* ==================== CSS Structure ==================== 
+/* ==================== CSS Structure ====================
 1. COMMON STYLES
 	- Reset Styles
 	- Common Classes
 	- Pre Loader Styles
-	
+
 2. HTML ELEMENTS STYLE
 	- Button Styles
 
 3. HEADER SECTION
 	- Main Navigation Styles
 	- Home section
-	
+
 4. FEATURE SECTION
 5. SERVICE SECTION
 6. STEP SECTION
@@ -178,7 +178,7 @@ font-weight: 700;
 	display: inline-block;
 	margin-top: 0;
 	padding: 8px 0;
-	
+
 }
 
 .section-overlay {
@@ -1218,4 +1218,10 @@ margin-right: 8px;
 	line-height:35px;
 	color:#444;
 	color:rgba(0, 0, 0, 0.4);
+}
+
+.fluid-width-video-wrapper {
+    width: 100%;
+    position: relative;
+    padding: 0;
 }
